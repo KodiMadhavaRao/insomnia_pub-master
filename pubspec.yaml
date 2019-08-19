@@ -25,6 +25,7 @@ dependencies:
   flutter_localizations:
       sdk: flutter
   flutter_cupertino_localizations: any
+  url_launcher: ^5.1.2
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
@@ -63,6 +64,13 @@ flutter:
     - images/smile_d.png
     - images/disapoint.png
     - images/disapoint_d.png
+    - images/location.PNG
+    - images/Events_3.png
+    - images/Special Offers_3.png
+    - images/Table reservation_3.png
+    - images/Gallery_3.png
+    - images/Packages_3.png
+    - images/Feedback_3.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

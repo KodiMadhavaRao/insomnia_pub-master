@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:insomnia_pub/ui/event_list/events_list.dart';
 import 'package:insomnia_pub/ui/feedback/feedback_widget.dart';
 import 'package:insomnia_pub/ui/home/carousel_with_indicator.dart';
+import 'package:insomnia_pub/ui/main_home.dart';
 import 'package:insomnia_pub/ui/offers/offers.dart';
 import 'package:insomnia_pub/ui/packages/packages.dart';
 import 'package:insomnia_pub/ui/photo_gallery/photo_gallery.dart';
@@ -10,8 +11,9 @@ import 'package:insomnia_pub/util/constants.dart';
 
 class MyHomePage extends StatefulWidget {
   final String title;
+  final int iPage;
 
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key key, this.title,this.iPage}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -24,7 +26,11 @@ class HomeScreenState extends State<MyHomePage> {
 
   @override
   void initState() {
-    page = Constants.EVENTS;
+    if(widget.iPage==null){
+      page = Constants.MAINHOME;
+    }else{
+      page=widget.iPage;
+    }
   }
 
   @override
@@ -97,6 +103,33 @@ class HomeScreenState extends State<MyHomePage> {
                   ],
                 ),
               ),
+          Container(
+            margin: EdgeInsets.only(left: 5.0, right: 5.0),
+            color: page == Constants.MAINHOME
+                ? Constants.COLORMAIN
+                : Colors.black,
+            child: ListTile(
+              title: Container(
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      width: 20,
+                      height: 20,
+                      child: Icon(Icons.home),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text('Home'),
+                      )
+                  ],
+                  ),
+                ),
+              onTap: () {
+                Navigator.pop(context);
+                changeView(Constants.MAINHOME);
+              },
+              ),
+            ),
               Container(
                 margin: EdgeInsets.only(left: 5.0, right: 5.0),
                 color: page == Constants.EVENTS
@@ -359,6 +392,9 @@ class HomeScreenState extends State<MyHomePage> {
       case Constants.FEEDBACK:
         return FeedBackWidget();
         break;
+      case Constants.MAINHOME:
+        return MainHome();
+        break;
     }
   }
 
@@ -387,6 +423,8 @@ class HomeScreenState extends State<MyHomePage> {
         break;
       case Constants.FEEDBACK:
         return getFeedBackTitleView("FeedBack");
+      case Constants.MAINHOME:
+        return Container();
         break;
     }
   }
