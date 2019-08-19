@@ -39,8 +39,20 @@ class PhotoGalleryState extends State<PhotoGallery> {
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3,mainAxisSpacing: 5,crossAxisSpacing: 5),
         itemBuilder: (BuildContext context, int index) {
           return GridTile(
-            child: Image.asset(
-              "images/insomnialogo.png",
+            child: InkWell(
+              onTap: (){
+                showDialog(
+                    context: context,
+                    builder: (_) => new AlertDialog(
+                      content:  Image.asset(
+                        "images/insomnialogo.png",
+                        ),
+                      )
+                    );
+              },
+              child: Image.asset(
+                "images/insomnialogo.png",
+              ),
             )/*Image.network(
               "https://source.unsplash.com/210x210/?people",
               )*/,
@@ -48,4 +60,6 @@ class PhotoGalleryState extends State<PhotoGallery> {
         });
     return gridView;
   }
+
+
 }

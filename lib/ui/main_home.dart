@@ -134,7 +134,11 @@ class MainHomeState extends State<MainHome> {
   getMainOptionsView(String icon, String name, int id) {
     return InkWell(
       onTap: () {
-
+//        push(context,getSelectedMainWidget(id));
+        HomeScreenState homeScreenState=MyHomePage.of(context);
+        setState(() {
+          homeScreenState.rebuild(id);
+        });
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 8.0),
@@ -167,10 +171,13 @@ class MainHomeState extends State<MainHome> {
   }
 
   push(BuildContext buildContext, Widget widget) {
-    Navigator.push(
-      buildContext,
-      MaterialPageRoute(builder: (context) => widget),
-      );
+    setState(() {
+      Navigator.push(
+        buildContext,
+        MaterialPageRoute(builder: (context) => widget),
+        );
+    });
+
   }
 
   Widget getSelectedMainWidget(int id) {

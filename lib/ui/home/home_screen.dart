@@ -19,6 +19,9 @@ class MyHomePage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return HomeScreenState();
   }
+  static HomeScreenState of(BuildContext context) {
+    return context.ancestorStateOfType(const TypeMatcher<HomeScreenState>());
+  }
 }
 
 class HomeScreenState extends State<MyHomePage> {
@@ -451,5 +454,10 @@ class HomeScreenState extends State<MyHomePage> {
             fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
       ),
     );
+  }
+  void rebuild(int viewId) {
+    setState(() {
+      page=viewId;
+    });
   }
 }

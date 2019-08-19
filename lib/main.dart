@@ -15,8 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: appTitle,
-      theme: ThemeData.dark()
-          .copyWith(primaryColor:Constants.COLORMAIN,appBarTheme: AppBarTheme(iconTheme: IconThemeData(color: Constants.COLORMAIN))),
+      theme: ThemeData.dark().copyWith(
+          primaryColor: Constants.COLORMAIN,
+          appBarTheme: AppBarTheme(iconTheme: IconThemeData(color: Constants.COLORMAIN))),
       home: MyHomePage(title: appTitle),
     );
   }
