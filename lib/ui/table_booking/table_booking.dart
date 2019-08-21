@@ -1,9 +1,13 @@
+import 'dart:collection';
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
+import 'package:insomnia_pub/net/http_nw.dart';
 import 'package:insomnia_pub/util/constants.dart';
 import 'package:insomnia_pub/util/number_counter.dart';
 
 class TableBooking extends StatefulWidget {
-  bool showCloseButton ;
+  bool showCloseButton;
 
   TableBooking(this.showCloseButton);
 
@@ -14,6 +18,11 @@ class TableBooking extends StatefulWidget {
 }
 
 class TableBookingState extends State<TableBooking> {
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController numberController = new TextEditingController();
+  int dropDownValue;
+  int maleCount, femaleCount;
   DateTime currentDate;
   TimeOfDay currentTime;
 
@@ -22,7 +31,8 @@ class TableBookingState extends State<TableBooking> {
     super.initState();
     currentDate = DateTime.now();
     currentTime = TimeOfDay.now();
-    widget.showCloseButton=widget.showCloseButton==null?false:widget.showCloseButton;
+    widget.showCloseButton = widget.showCloseButton == null ? false : widget.showCloseButton;
+    dropDownValue = 1;
 //    currentTime.format(context);
   }
 
@@ -48,9 +58,20 @@ class TableBookingState extends State<TableBooking> {
               Icons.account_circle,
               color: Colors.black,
             ),
-            "Your Name"),
-        getLabelvalueView("EMAIL ADDRESS", Icon(Icons.email, color: Colors.black), "Email Address"),
-        getLabelvalueView("MOBILE", Icon(Icons.phone_android, color: Colors.black), "Mobile"),
+            "Your Name",
+            TextInputType.text,
+            nameController),
+        getLabelvalueView(
+            "EMAIL ADDRESS",
+            Icon(
+              Icons.email,
+              color: Colors.black,
+            ),
+            "Email Address",
+            TextInputType.emailAddress,
+            emailController),
+        getLabelvalueView("MOBILE", Icon(Icons.phone_android, color: Colors.black), "Mobile",
+            TextInputType.number, numberController),
         getGuestsView(),
         getDateTimePicker(),
         Padding(padding: EdgeInsets.all(5)),
@@ -59,7 +80,8 @@ class TableBookingState extends State<TableBooking> {
     );
   }
 
-  Widget getLabelvalueView(String label, Icon icon, String hint) {
+  Widget getLabelvalueView(String label, Icon icon, String hint, TextInputType textType,
+      TextEditingController textEditController) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Column(children: <Widget>[
@@ -78,6 +100,8 @@ class TableBookingState extends State<TableBooking> {
           child: Container(
             color: Colors.white,
             child: new TextField(
+              controller: textEditController,
+              keyboardType: textType,
               textAlign: TextAlign.left,
               style: TextStyle(color: Colors.black),
               decoration: new InputDecoration(
@@ -138,7 +162,10 @@ class TableBookingState extends State<TableBooking> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
-                  child: Text("NO OF GUESTS GOING"),
+                  child: Text(
+                    "NO OF GUESTS GOING",
+                    style: TextStyle(fontSize: 12),
+                  ),
                 ),
                 Container(
 //                width: double.infinity,
@@ -148,15 +175,11 @@ class TableBookingState extends State<TableBooking> {
                     child: Theme(
                       data: ThemeData.light(),
                       child: DropdownButton(
+                        value: dropDownValue,
                         isExpanded: true,
                         items: getItem(),
                         onChanged: onDropDownChange,
                         style: TextStyle(color: Colors.black),
-                        /* icon: Icon(
-                          Icons.arrow_drop_down,
-                          color: Colors.black,
-                          size: 32,
-                        ),*/
                       ),
                     ),
                   ),
@@ -191,16 +214,17 @@ class TableBookingState extends State<TableBooking> {
   }
 
   void onMaleChange(int value) {
-//    setState(() {});
+    maleCount = value;
   }
 
   void onFemaleChange(int value) {
-//    setState(() {});
+    femaleCount = value;
   }
 
   List<DropdownMenuItem<int>> getItem() {
     List<DropdownMenuItem<int>> items = [
       DropdownMenuItem(
+        value: 1,
         child: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: Text(
@@ -210,6 +234,7 @@ class TableBookingState extends State<TableBooking> {
         ),
       ),
       DropdownMenuItem(
+        value: 2,
         child: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: Text(
@@ -219,6 +244,7 @@ class TableBookingState extends State<TableBooking> {
         ),
       ),
       DropdownMenuItem(
+        value: 3,
         child: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: Text(
@@ -228,6 +254,7 @@ class TableBookingState extends State<TableBooking> {
         ),
       ),
       DropdownMenuItem(
+        value: 4,
         child: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: Text(
@@ -240,7 +267,11 @@ class TableBookingState extends State<TableBooking> {
     return items;
   }
 
-  void onDropDownChange(int value) {}
+  void onDropDownChange(int value) {
+    setState(() {
+      dropDownValue = value;
+    });
+  }
 
   Container getReservationButton() {
     return Container(
@@ -249,7 +280,11 @@ class TableBookingState extends State<TableBooking> {
         child: RaisedButton(
           color: Constants.COLORMAIN,
           child: Text("Reserve Table"),
-          onPressed: () {},
+          onPressed: () {
+            AppHttpRequest.saveTableReservation(formMapData()).then((String body) {
+              handleTableBookingSaveResponse(body);
+            });
+          },
         ));
   }
 
@@ -364,11 +399,88 @@ class TableBookingState extends State<TableBooking> {
   }
 
   Widget showCloseButton() {
-    return widget.showCloseButton?InkWell(child: Padding(
-      padding: const EdgeInsets.only(right:8.0,top:4.0),
-      child: Icon(Icons.close),
-    ),onTap: (){
-      Navigator.pop(context);
-    },):Container();
+    return widget.showCloseButton
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "TABLE BOOKING",
+                    style: TextStyle(color: Constants.COLORMAIN, fontSize: 18),
+                  ),
+                ),
+                flex: 2,
+              ),
+              Expanded(
+                flex: 1,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: InkWell(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8.0, top: 4.0),
+                      child: Icon(Icons.close),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              )
+            ],
+          )
+        : Container();
+  }
+
+  Map<String, String> formMapData() {
+    Map<String, String> resrevationData = new HashMap();
+    resrevationData["user_id"] = "123";
+    resrevationData["user_name"] = nameController.text;
+    resrevationData["user_mobile"] = numberController.text;
+    resrevationData["males"] = maleCount.toString();
+    resrevationData["females"] = femaleCount.toString();
+    resrevationData["members"] = dropDownValue.toString();
+    resrevationData["date_time"] = formatDateTime();
+    resrevationData["status"] = 0.toString();
+    return resrevationData;
+  }
+
+  String formatDateTime() {
+    return currentDate.day.toString() +
+        "-" +
+        currentDate.month.toString() +
+        "-" +
+        currentDate.year.toString() +
+        " " +
+        currentTime.hour.toString() +
+        ":" +
+        currentTime.minute.toString();
+  }
+
+  void handleTableBookingSaveResponse(String body) {
+    Map<String, dynamic> jsonData = json.decode(body);
+    if (jsonData["status"] == "success") {
+      Fluttertoast.showToast(
+          msg: jsonData["message"],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIos: 1,
+          backgroundColor: Constants.COLORMAIN,
+          textColor: Colors.white,
+          fontSize: 16.0
+          );
+    } else {
+      Fluttertoast.showToast(
+          msg: jsonData["message"],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+          );
+    }
   }
 }

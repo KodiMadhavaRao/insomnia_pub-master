@@ -1,7 +1,5 @@
 import 'package:http/http.dart';
 import 'dart:convert';
-import 'package:http/http.dart' show Client;
-import 'dart:async';
 
 class AppHttpRequest {
   static getOffersResponse() async {
@@ -86,6 +84,22 @@ class AppHttpRequest {
     //   "id": 1
     // }
   }
+  /*user_id:123
+  user_name:MM
+  user_mobile:88
+  males:2
+  females:2
+  members:4*/
+  static Future<String> saveTableReservation(Map<String,String> reservationData) async {
+    String url = 'http://geekadvises.com/insomnia/reservations_data';
+    Map<String, String> headers = {"Content-type": "application/x-www-form-urlencoded"};
+    Response response = await post(url, headers: headers, body: reservationData);
+    int statusCode = response.statusCode;
+    String body = response.body;
+    return body;
+
+  }
+
 }
 
 final _root = 'https://hacker-news.firebaseio.com/v0';
