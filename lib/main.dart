@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insomnia_pub/ui/Loginscreen.dart';
 import 'package:insomnia_pub/ui/home/home_screen.dart';
 import 'package:insomnia_pub/util/constants.dart';
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Constants.COLORMAIN,
           appBarTheme: AppBarTheme(iconTheme: IconThemeData(color: Constants.COLORMAIN))),
       home: MyHomePage(title: appTitle),
+//      home: LoginScreen(),
     );
   }
 }

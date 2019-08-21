@@ -29,7 +29,7 @@ class AppHttpRequest {
 
   static getGalleryResponse() async {
     Response response =
-        await get('http://geekadvises.com/insomnia/special_offers_data');
+        await get('http://geekadvises.com/insomnia/gallery');
     int statusCode = response.statusCode;
     Map<String, String> headers = response.headers;
     String contentType = headers['content-type'];
@@ -38,8 +38,7 @@ class AppHttpRequest {
   }
 
   static getPackagesResponse() async {
-    Response response =
-        await get('http://geekadvises.com/insomnia/special_offers_data');
+    Response response = await get('http://geekadvises.com/insomnia/packages_data');
     int statusCode = response.statusCode;
     Map<String, String> headers = response.headers;
     String contentType = headers['content-type'];

@@ -390,7 +390,7 @@ class HomeScreenState extends State<MyHomePage> {
         return PhotoGallery();
         break;
       case Constants.TABLEBOOKING:
-        return TableBooking();
+        return TableBooking(false);
         break;
       case Constants.FEEDBACK:
         return FeedBackWidget();

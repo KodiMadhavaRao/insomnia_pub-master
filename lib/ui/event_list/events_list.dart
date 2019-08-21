@@ -46,7 +46,7 @@ class EventsListState extends State<EventsList> {
         shrinkWrap: true,
         itemCount: eventL1istDTO.message.length,
         gridDelegate:
-            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 5.0,mainAxisSpacing: 35.0),
+            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 8.0,mainAxisSpacing: 35.0),
         itemBuilder: (BuildContext context, int index) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -57,6 +57,9 @@ class EventsListState extends State<EventsList> {
                     eventL1istDTO.message[index].image,
 //                  'https://source.unsplash.com/210x210/?pub&party',
                   fit: BoxFit.cover,
+                  height: double.infinity,
+                  width: double.infinity,
+                  alignment: Alignment.center,
                 ),
               ),
                Padding(

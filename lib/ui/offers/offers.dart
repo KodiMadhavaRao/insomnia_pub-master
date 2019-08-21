@@ -46,7 +46,7 @@ class OffersWidgetsState extends State<OffersWidgets> {
         shrinkWrap: true,
         itemCount: offerList.message.length,
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, mainAxisSpacing: 25),
+            crossAxisCount: 2, mainAxisSpacing: 25,crossAxisSpacing: 8.0),
         itemBuilder: (BuildContext context, int index) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +56,10 @@ class OffersWidgetsState extends State<OffersWidgets> {
                 child: Image.network(
                     offerList.message[index].image,
 //                  'https://source.unsplash.com/210x210/?food',
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
+                  height: double.infinity,
+                  width: double.infinity,
+                  alignment: Alignment.center,
                 ),
               ),
               Padding(
