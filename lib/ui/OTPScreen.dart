@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:insomnia_pub/net/http_nw.dart';
-import 'package:insomnia_pub/ui/OTPScreen.dart';
 import 'package:insomnia_pub/util/Utils.dart';
 import 'package:insomnia_pub/util/constants.dart';
 import 'package:insomnia_pub/util/progress_indicator.dart';
 
 import 'home/home_screen.dart';
 
-class AuthenticationScreen extends StatefulWidget {
-  State<StatefulWidget> createState() => new _AutenticationState();
+class OTPScreenWidget extends StatefulWidget {
+  final number;
+
+  State<StatefulWidget> createState() => new OTPScreenState();
+
+  OTPScreenWidget({this.number});
 }
 
-class _AutenticationState extends State<AuthenticationScreen> {
-  TextEditingController _mobileNumber;
-
-//  String _mobile = "";
+class OTPScreenState extends State<OTPScreenWidget> {
+  TextEditingController _pwdOtp;
 
   bool isLoadingState = false;
 
-  // our default setting is to login, and we should switch to creating an account when the user chooses to
-
   initState() {
     super.initState();
-    _mobileNumber = new TextEditingController();
+    _pwdOtp = new TextEditingController();
   }
 
   @override
@@ -30,7 +29,11 @@ class _AutenticationState extends State<AuthenticationScreen> {
     return ProgressWidget(
       isLoading: isLoadingState,
       child: new Scaffold(
-        body: DecoratedBox(
+//      appBar: _buildBar(context),
+        body:
+            /*new Container(
+          padding: EdgeInsets.all(16.0),*/
+            DecoratedBox(
           position: DecorationPosition.background,
           decoration: BoxDecoration(
               image: DecorationImage(
@@ -59,10 +62,10 @@ class _AutenticationState extends State<AuthenticationScreen> {
           new Container(
             margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
             child: new TextField(
-              controller: _mobileNumber,
+              controller: _pwdOtp,
               style: TextStyle(color: Colors.white, fontSize: 18),
               decoration: new InputDecoration(
-                labelText: 'Mobile',
+                labelText: 'OTP',
                 hintStyle: TextStyle(fontWeight: FontWeight.w300),
                 filled: true,
                 labelStyle: TextStyle(color: Colors.white, fontSize: 16),
@@ -84,7 +87,7 @@ class _AutenticationState extends State<AuthenticationScreen> {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0)),
             child: new RaisedButton(
               child: new Text(
-                'LOGIN',
+                'SUBMIT',
                 style: TextStyle(color: Colors.black, fontSize: 18),
               ),
               onPressed: _loginPressed,
@@ -103,12 +106,12 @@ class _AutenticationState extends State<AuthenticationScreen> {
 
   void _loginPressed() {
 //    print('The user wants to login with  and $_mobile');
-    if (_mobileNumber.text.isEmpty || _mobileNumber.text.length < 10) {
-      Utils.showToast("Invalid mobile number", Colors.redAccent, Colors.white);
+    if (_pwdOtp.text.isEmpty) {
+      Utils.showToast("Invalid  number", Colors.redAccent, Colors.white);
       return;
     }
 
-    AppHttpRequest.loginRequest(_mobileNumber.text).then((response) {
+    AppHttpRequest.otpValidation(widget.number,_pwdOtp.text).then((response) {
       if (response is Map) {
         if (response['status'] == 'error') {
           Utils.showToast(
@@ -116,8 +119,8 @@ class _AutenticationState extends State<AuthenticationScreen> {
           /*todo remove this latter*/
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) =>
-                  OTPScreenWidget(number: _mobileNumber.text)));
-        } else if (response['status'] == 'success') {
+                  MyHomePage(title: "Insomnia")));
+        } else if (response['status'] == 'sucess') {
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) =>
                   MyHomePage(title: "Insomnia")));

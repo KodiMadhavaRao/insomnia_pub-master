@@ -57,26 +57,29 @@ class MainHomeState extends State<MainHome> {
 
   Widget getMainView() {
     return Column(
-      children: <Widget>[getFindMeView(), getHomeView()],
-      );
+      children: <Widget>[getFindMeView(), Expanded(child: getHomeView())],
+    );
   }
 
   Widget getFindMeView() {
+    double mapHeight = MediaQuery.of(context).size.width * 0.13;
     return InkWell(
-      onTap: (){
+      onTap: () {
         launchMap();
       },
       child: Stack(
         children: <Widget>[
           Image.asset(
             "images/location.PNG",
-            height: 100,
-            ),
+            height: mapHeight,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
           Container(
-            height: 100,
+            height: mapHeight,
             decoration: BoxDecoration(
-                color: Colors.white,
-                gradient: LinearGradient(
+              color: Colors.grey.withAlpha(150),
+              /*gradient: LinearGradient(
                     begin: FractionalOffset.topCenter,
                     end: FractionalOffset.bottomCenter,
                     colors: [
@@ -86,8 +89,9 @@ class MainHomeState extends State<MainHome> {
                     stops: [
                       0.0,
                       1.0
-                    ])),
+                    ])*/
             ),
+          ),
           Positioned.fill(
             child: Align(
               alignment: Alignment.centerRight,
@@ -96,37 +100,51 @@ class MainHomeState extends State<MainHome> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
+                    padding: const EdgeInsets.only(left: 20.0, right: 8.0),
+                    child: Icon(
+                      Icons.arrow_forward,
+                      size: 30,
+                      color: Colors.yellow,
+                    ),
+                  ),
+                  Padding(
                     padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                     child: Icon(
                       Icons.arrow_forward,
-                      color: Constants.COLORMAIN,
-                      ),
+                      size: 30,
+                      color: Colors.yellow,
                     ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                    child: Icon(Icons.arrow_forward, color: Constants.COLORMAIN),
-                    ),
+                  ),
                   Text(
                     "Find Me",
-                    style: TextStyle(fontSize: 20),
-                    )
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  )
                 ],
-                ),
               ),
-            )
+            ),
+          )
         ],
-        ),
+      ),
     );
   }
 
   Widget getHomeView() {
     var gridView = new GridView.builder(
+        padding: EdgeInsets.only(
+            top: 25,
+            left: 50,
+            right: 50,
+            bottom: 50),
         shrinkWrap: true,
         itemCount: 6,
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: 1.5, crossAxisCount: 2, mainAxisSpacing: 0),
+            childAspectRatio: 1,
+            crossAxisCount: 2,
+            crossAxisSpacing: 25,
+            mainAxisSpacing: 25),
         itemBuilder: (BuildContext context, int index) {
-          return getMainOptionsView(alIcons[index], description[index], ids[index]);
+          return getMainOptionsView(
+              alIcons[index], description[index], ids[index]);
         });
     return gridView;
   }
@@ -135,21 +153,27 @@ class MainHomeState extends State<MainHome> {
     return InkWell(
       onTap: () {
 //        push(context,getSelectedMainWidget(id));
-        HomeScreenState homeScreenState=MyHomePage.of(context);
+        HomeScreenState homeScreenState = MyHomePage.of(context);
         setState(() {
           homeScreenState.rebuild(id);
         });
       },
-      child: Padding(
-        padding: const EdgeInsets.only(top: 8.0),
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+//        padding: const EdgeInsets.only(top: 8.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          gradient: LinearGradient(
+              colors: [Color(0xff55545A), Color(0xff34353A)],
+              begin: FractionalOffset.topLeft,
+              end: FractionalOffset.bottomRight,
+              stops: [0.0, 0.8],
+              tileMode: TileMode.repeated),
+        ),
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: <Widget>[
-            Container(
-              child: Card(),
-              height: 150,
-              width: 150,
-              ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -157,17 +181,17 @@ class MainHomeState extends State<MainHome> {
                   icon,
                   height: 45,
                   width: 45,
-                  ),
+                ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
+                  padding: const EdgeInsets.only(top: 15.0),
                   child: Text(name),
-                  )
+                )
               ],
-              ),
+            ),
           ],
-          ),
         ),
-      );
+      ),
+    );
   }
 
   push(BuildContext buildContext, Widget widget) {
@@ -175,9 +199,8 @@ class MainHomeState extends State<MainHome> {
       Navigator.push(
         buildContext,
         MaterialPageRoute(builder: (context) => widget),
-        );
+      );
     });
-
   }
 
   Widget getSelectedMainWidget(int id) {
@@ -202,7 +225,8 @@ class MainHomeState extends State<MainHome> {
         break;
     }
   }
-  launchMap({String lat = "17.4312763", String long = "78.4069515"}) async{
+
+  launchMap({String lat = "17.4312763", String long = "78.4069515"}) async {
     var mapSchema = 'geo:$lat,$long';
     if (await canLaunch(mapSchema)) {
       await launch(mapSchema);

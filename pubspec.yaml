@@ -74,6 +74,7 @@ flutter:
     - images/Packages_3.png
     - images/Feedback_3.png
     - images/bg_1x.png
+    - images/background_cd.jpg
   #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

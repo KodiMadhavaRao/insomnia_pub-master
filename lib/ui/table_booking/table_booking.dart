@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:insomnia_pub/net/http_nw.dart';
 import 'package:insomnia_pub/util/constants.dart';
 import 'package:insomnia_pub/util/number_counter.dart';
+import 'package:insomnia_pub/util/progress_indicator.dart';
 
 class TableBooking extends StatefulWidget {
   bool showCloseButton;
@@ -18,6 +19,7 @@ class TableBooking extends StatefulWidget {
 }
 
 class TableBookingState extends State<TableBooking> {
+  bool loadingStatus = false;
   TextEditingController nameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
   TextEditingController numberController = new TextEditingController();
@@ -38,7 +40,7 @@ class TableBookingState extends State<TableBooking> {
 
   @override
   Widget build(BuildContext context) {
-    return getMainView();
+    return ProgressWidget(isLoading: loadingStatus, child: getMainView());
   }
 
   Widget getMainView() {
@@ -281,6 +283,9 @@ class TableBookingState extends State<TableBooking> {
           color: Constants.COLORMAIN,
           child: Text("Reserve Table"),
           onPressed: () {
+            setState(() {
+              loadingStatus=true;
+            });
             AppHttpRequest.saveTableReservation(formMapData()).then((String body) {
               handleTableBookingSaveResponse(body);
             });
@@ -460,6 +465,9 @@ class TableBookingState extends State<TableBooking> {
   }
 
   void handleTableBookingSaveResponse(String body) {
+    setState(() {
+      loadingStatus=false;
+    });
     Map<String, dynamic> jsonData = json.decode(body);
     if (jsonData["status"] == "success") {
       Fluttertoast.showToast(

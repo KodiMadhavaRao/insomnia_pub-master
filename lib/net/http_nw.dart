@@ -44,25 +44,18 @@ class AppHttpRequest {
     return json;
   }
 
-  static submitFeedBack(int user_id, String food, String service,
-      String setting, String overall, String review) async {
-    // set up PUT request arguments
+  static submitFeedBack(int user_id, int food, int service, int setting, int overall, String review) async {
     String url = 'http://geekadvises.com/insomnia/feedback_data';
-    Map<String, String> headers = {"Content-type": "application/json"};
-    String json =
-        '{user_id: $user_id,food: $food,service: $service,setting: $setting,overall: $overall,review: $review,}}';
-    // make PUT request
-    Response response = await put(url, headers: headers, body: json);
-    // check the status code for the result
-    int statusCode = response.statusCode;
-    // this API passes back the updated item with the id added
-    String body = response.body;
-    // {
-    //   "title": "Hello",
-    //   "body": "body text",
-    //   "userId": 1,
-    //   "id": 1
-    // }
+    Map<String, String> headers = {"Content-type": "application/x-www-form-urlencoded"};
+    Map<String,String> feedbackdata=Map();
+    feedbackdata["user_id"]=user_id.toString();
+    feedbackdata["food_service"]=food.toString();
+    feedbackdata["service"]=service.toString();
+    feedbackdata["setting"]=setting.toString();
+    feedbackdata["overall"]=overall.toString();
+    feedbackdata["review"]=review.toString();
+    Response response = await post(url, headers: headers, body: feedbackdata);
+
     return response.body;
   }
 
@@ -99,7 +92,37 @@ class AppHttpRequest {
     return body;
 
   }
+  static loginRequest(String mobile) async {
+    String url = 'http://geekadvises.com/insomnia/loginmobile';
+    Map<String, String> headers = {"Content-type": "application/x-www-form-urlencoded"};
+    Map<String,String> login=Map();
+    login["mobile"]=mobile;
+    Response response = await post(url, headers: headers, body: login);
+    final jsonResponse = json.decode(response.body);
+    return jsonResponse;
+  }
+
+  static singUpRequest(String username, String mobile) async {
+    String url = 'http://geekadvises.com/insomnia/signup';
+    Map<String, String> headers = {"Content-type": "application/x-www-form-urlencoded"};
+    Map<String,String> signup=Map();
+    signup["mobile"]=mobile;
+    signup["name"]=username;
+    Response response = await post(url, headers: headers, body: signup);
+    final jsonResponse = json.decode(response.body);
+    return jsonResponse;
+  }
+
+  static otpValidation(String mobile,String otp) async {
+    String url = 'http://geekadvises.com/insomnia/otpverify';
+    Map<String, String> headers = {"Content-type": "application/x-www-form-urlencoded"};
+    Map<String,String> otpVerify=Map();
+    otpVerify["mobile"]=mobile;
+    otpVerify["otp"]=otp;
+    Response response = await post(url, headers: headers, body: otpVerify);
+    final jsonResponse = json.decode(response.body);
+    return jsonResponse;
+  }
+
 
 }
-
-final _root = 'https://hacker-news.firebaseio.com/v0';

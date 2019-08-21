@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insomnia_pub/net/http_nw.dart';
+import 'package:insomnia_pub/util/Utils.dart';
 import 'package:insomnia_pub/util/constants.dart';
 import 'package:insomnia_pub/util/feedback_bar.dart';
 import 'package:insomnia_pub/util/progress_indicator.dart';
@@ -12,14 +13,15 @@ class FeedBackWidget extends StatefulWidget {
 }
 
 class FeedBackWidgetState extends State<FeedBackWidget> {
-  String foodRatting = "";
-  String serviceRatting = "";
-  String settingRatting = "";
-  String overAllRatting = "";
+  int foodRatting = 0;
+  int serviceRatting = 0;
+  int settingRatting = 0;
+  int overAllRatting = 0;
   TextEditingController reviewText;
 
   bool loadingStatus = false;
-@override
+
+  @override
   void initState() {
     super.initState();
     reviewText = TextEditingController();
@@ -35,19 +37,23 @@ class FeedBackWidgetState extends State<FeedBackWidget> {
             FeedBackBarWidget(
               label: "Food",
               onRattingChange: foodRattingChange,
-            ),
+              selectedRatting: foodRatting,
+              ),
             FeedBackBarWidget(
               label: "Service",
               onRattingChange: serviceRattingChange,
-            ),
+              selectedRatting: serviceRatting,
+              ),
             FeedBackBarWidget(
               label: "Setting",
               onRattingChange: settingRattingChange,
-            ),
+              selectedRatting: settingRatting,
+              ),
             FeedBackBarWidget(
               label: "Over all",
               onRattingChange: overAllRattingChange,
-            ),
+              selectedRatting: overAllRatting,
+              ),
             getReviewTitle("Your Review"),
             Container(
               padding: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -66,15 +72,15 @@ class FeedBackWidgetState extends State<FeedBackWidget> {
                   hintText: "Type here",
                   hintStyle: TextStyle(color: Colors.grey[700]),
                   border: InputBorder.none,
+                  ),
                 ),
               ),
-            ),
             getSubmitButton(),
           ],
+          ),
         ),
-      ),
       isLoading: loadingStatus,
-    );
+      );
   }
 
   Widget getReviewTitle(String value) {
@@ -88,24 +94,24 @@ class FeedBackWidgetState extends State<FeedBackWidget> {
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: Constants.COLORMAIN),
-      ),
-    );
+        ),
+      );
   }
 
   void foodRattingChange(int value) {
-    this.foodRatting = setRatting(value);
+    this.foodRatting = value;
   }
 
   void serviceRattingChange(int value) {
-    this.serviceRatting = setRatting(value);
+    this.serviceRatting = value;
   }
 
   void settingRattingChange(int value) {
-    this.settingRatting = setRatting(value);
+    this.settingRatting = value;
   }
 
   void overAllRattingChange(int value) {
-    this.overAllRatting = setRatting(value);
+    this.overAllRatting = value;
   }
 
   Widget getSubmitButton() {
@@ -114,11 +120,9 @@ class FeedBackWidgetState extends State<FeedBackWidget> {
       child: Container(
         margin: EdgeInsets.only(top: 30.0),
         padding: EdgeInsets.only(top: 15, bottom: 15),
-//      height: 75,
         width: 200,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-//        border: Border.all(style: ),
           borderRadius: BorderRadius.all(Radius.circular(15)),
           gradient: LinearGradient(
               colors: [Color(0xffe2cda0), Constants.COLORMAIN],
@@ -126,46 +130,49 @@ class FeedBackWidgetState extends State<FeedBackWidget> {
               end: FractionalOffset.bottomCenter,
               stops: [0.0, 1.0],
               tileMode: TileMode.repeated),
-        ),
+          ),
         child: Text(
           "SUBMIT",
           style: TextStyle(color: Colors.black, fontSize: 24),
+          ),
         ),
-      ),
-    );
+      );
   }
 
   void onSubmitRatting() {
-    AppHttpRequest.submitFeedBack(121, foodRatting, serviceRatting, settingRatting,
-            overAllRatting, reviewText.text)
+    if (foodRatting == 0) {
+      Utils.showToast("Please rate our Food", Colors.redAccent, Colors.white);
+      return;
+    } else if (serviceRatting == 0) {
+      Utils.showToast(
+          "Please rate our Service's", Colors.redAccent, Colors.white);
+      return;
+    } else if (settingRatting == 0) {
+      Utils.showToast("Please rate our Setting's and Arrangement",
+                          Colors.redAccent, Colors.white);
+      return;
+    } else if (overAllRatting == 0) {
+      Utils.showToast(
+          "Please rate our Over all", Colors.redAccent, Colors.white);
+      return;
+    }
+    AppHttpRequest.submitFeedBack(121, foodRatting, serviceRatting,
+                                      settingRatting, overAllRatting, reviewText.text)
         .then((response) {
       setState(() {
-        reviewText.text = "";
+//        if(response is Map)
         loadingStatus = false;
+        reviewText.text = "";
+        foodRatting = 0;
+        serviceRatting = 0;
+        settingRatting = 0;
+        overAllRatting = 0;
       });
+      Utils.showToast("Thank's for valuble feedback");
     });
+
     setState(() {
       loadingStatus = true;
     });
-  }
-
-  String setRatting(int value) {
-    switch (value) {
-      case 0:
-        return "Poor";
-        break;
-      case 1:
-        return "average";
-        break;
-      case 2:
-        return "good";
-        break;
-      case 3:
-        return "very good";
-        break;
-      default:
-        return "";
-        break;
-    }
   }
 }

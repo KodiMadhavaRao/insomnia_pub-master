@@ -4,8 +4,10 @@ import 'package:insomnia_pub/util/constants.dart';
 class FeedBackBarWidget extends StatefulWidget {
   final String label;
   final ValueChanged<int> onRattingChange;
+  int selectedRatting;
 
-  const FeedBackBarWidget({Key key, this.label, this.onRattingChange})
+  FeedBackBarWidget(
+      {Key key, this.label, this.onRattingChange, this.selectedRatting})
       : super(key: key);
 
   @override
@@ -15,16 +17,17 @@ class FeedBackBarWidget extends StatefulWidget {
 }
 
 class FeedBackBarWidgetState extends State<FeedBackBarWidget> {
-  int selectedRatting;
+  FeedBackBarWidgetState();
+
+/*
   @override
   void initState() {
     super.initState();
-    selectedRatting=-1;
-  }
+    selectedRatting = widget.selectedRatting;
+  }*/
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       margin: EdgeInsets.only(bottom: 8.0),
       padding: EdgeInsets.all(8.0),
@@ -37,7 +40,7 @@ class FeedBackBarWidgetState extends State<FeedBackBarWidget> {
             end: FractionalOffset.bottomCenter,
             stops: [0.0, 0.5],
             tileMode: TileMode.repeated),
-      ),
+        ),
       child: Row(
         children: <Widget>[
           Text(
@@ -46,31 +49,48 @@ class FeedBackBarWidgetState extends State<FeedBackBarWidget> {
                 color: Constants.COLORMAIN,
                 fontSize: 24,
                 fontWeight: FontWeight.w700),
-          ),
+            ),
           Spacer(),
-          getRattingIcon(selectedRatting==0?'images/disapoint_d.png':'images/disapoint.png', 0),
-          getRattingIcon(selectedRatting==1?'images/calm_d.png':'images/calm.png', 1),
-          getRattingIcon(selectedRatting==2?'images/smile_d.png':'images/smile.png', 2),
-          getRattingIcon(selectedRatting==3?'images/smile_d.png':'images/smile.png', 3),
+          getRattingIcon(
+              widget.selectedRatting == 1
+                  ? 'images/disapoint_d.png'
+                  : 'images/disapoint.png',
+              1),
+          getRattingIcon(
+              widget.selectedRatting == 2
+                  ? 'images/calm_d.png'
+                  : 'images/calm.png',
+              2),
+          getRattingIcon(
+              widget.selectedRatting == 3
+                  ? 'images/smile_d.png'
+                  : 'images/smile.png',
+              3),
+          getRattingIcon(
+              widget.selectedRatting == 4
+                  ? 'images/smile_d.png'
+                  : 'images/smile.png',
+              4),
         ],
-      ),
-    );
+        ),
+      );
   }
 
   Widget getRattingIcon(String assetPath, int rating) {
     return InkWell(
-      onTap:(){onRattingChanged(rating);} ,
+      onTap: () {
+        onRattingChanged(rating);
+      },
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, top: 10, bottom: 10),
         child: Image.asset(assetPath),
-      ),
-    );
+        ),
+      );
   }
 
   onRattingChanged(int rating) {
-    selectedRatting=rating;
-    widget.onRattingChange(selectedRatting);
-    setState(() {
-    });
+    widget.selectedRatting = rating;
+    widget.onRattingChange(widget.selectedRatting);
+    setState(() {});
   }
 }

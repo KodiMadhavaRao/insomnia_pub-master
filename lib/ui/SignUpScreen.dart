@@ -7,22 +7,23 @@ import 'package:insomnia_pub/util/progress_indicator.dart';
 
 import 'home/home_screen.dart';
 
-class AuthenticationScreen extends StatefulWidget {
-  State<StatefulWidget> createState() => new _AutenticationState();
+class SignUpScreen extends StatefulWidget {
+  State<StatefulWidget> createState() => SignUpScreenState();
 }
 
-class _AutenticationState extends State<AuthenticationScreen> {
+class SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _mobileNumber;
 
 //  String _mobile = "";
 
   bool isLoadingState = false;
 
-  // our default setting is to login, and we should switch to creating an account when the user chooses to
+  TextEditingController _userName;
 
   initState() {
     super.initState();
     _mobileNumber = new TextEditingController();
+    _userName = new TextEditingController();
   }
 
   @override
@@ -42,6 +43,7 @@ class _AutenticationState extends State<AuthenticationScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _buildTextFields(),
+//            _buildButtons(),
             ],
           ),
         ),
@@ -56,6 +58,28 @@ class _AutenticationState extends State<AuthenticationScreen> {
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
+          new Container(
+            margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+            child: new TextField(
+              controller: _userName,
+              style: TextStyle(color: Colors.white, fontSize: 18),
+              decoration: new InputDecoration(
+                labelText: 'User name',
+                hintStyle: TextStyle(fontWeight: FontWeight.w300),
+                filled: true,
+                labelStyle: TextStyle(color: Colors.white, fontSize: 16),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    borderSide:
+                        BorderSide(width: 2, color: Constants.COLORMAIN)),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  borderSide: BorderSide(width: 2, color: Constants.COLORMAIN),
+                ),
+              ),
+              keyboardType: TextInputType.text,
+            ),
+          ),
           new Container(
             margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
             child: new TextField(
@@ -84,10 +108,10 @@ class _AutenticationState extends State<AuthenticationScreen> {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0)),
             child: new RaisedButton(
               child: new Text(
-                'LOGIN',
+                'SIGN UP',
                 style: TextStyle(color: Colors.black, fontSize: 18),
               ),
-              onPressed: _loginPressed,
+              onPressed: _SignUpPressed,
               padding: EdgeInsets.only(top: 15, bottom: 15),
               color: Constants.COLORMAIN,
               shape: RoundedRectangleBorder(
@@ -101,14 +125,18 @@ class _AutenticationState extends State<AuthenticationScreen> {
 
   // These functions can self contain any user auth logic required, they all have access to _user and _mobile
 
-  void _loginPressed() {
-//    print('The user wants to login with  and $_mobile');
+  void _SignUpPressed() {
+    if (_userName.text.isEmpty) {
+      Utils.showToast("Invalid User Name", Colors.redAccent, Colors.white);
+      return;
+    }
     if (_mobileNumber.text.isEmpty || _mobileNumber.text.length < 10) {
       Utils.showToast("Invalid mobile number", Colors.redAccent, Colors.white);
       return;
     }
 
-    AppHttpRequest.loginRequest(_mobileNumber.text).then((response) {
+    AppHttpRequest.singUpRequest(_userName.text, _mobileNumber.text)
+        .then((response) {
       if (response is Map) {
         if (response['status'] == 'error') {
           Utils.showToast(
@@ -117,10 +145,10 @@ class _AutenticationState extends State<AuthenticationScreen> {
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) =>
                   OTPScreenWidget(number: _mobileNumber.text)));
-        } else if (response['status'] == 'success') {
+        } else if (response['status'] == 'sucess') {
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) =>
-                  MyHomePage(title: "Insomnia")));
+                  OTPScreenWidget(number: _mobileNumber.text)));
         }
 
         setState(() {
