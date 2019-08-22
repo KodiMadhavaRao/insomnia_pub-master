@@ -109,7 +109,7 @@ class _AutenticationState extends State<AuthenticationScreen> {
     }
 
     AppHttpRequest.loginRequest(_mobileNumber.text).then((response) {
-      if (response is Map) {
+      if (response  is Map) {
         if (response['status'] == 'error') {
           Utils.showToast(response['message'], Colors.red, Colors.white, 10.0);
           /*todo remove this latter*/
@@ -124,7 +124,7 @@ class _AutenticationState extends State<AuthenticationScreen> {
               ModalRoute.withName("/"));*/
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) =>
-                  OTPScreenWidget(number: _mobileNumber.text)));
+                  MyHomePage(title: "Insomnia")));
         }
 
         setState(() {

@@ -125,7 +125,7 @@ class OTPScreenState extends State<OTPScreenWidget> {
               MaterialPageRoute(
                   builder: (context) => MyHomePage(title: "Insomnia")),
               ModalRoute.withName("/"));*/
-        } else if (response['status'] == 'sucess') {
+        } else if (response['status'] == 'success') {
 /*
           Navigator.pushAndRemoveUntil(
               context,
