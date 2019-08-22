@@ -46,7 +46,7 @@ class PhotoGalleryState extends State<PhotoGallery> {
         shrinkWrap: true,
         itemCount: galleryListDTO.message.length,
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, mainAxisSpacing: 5, crossAxisSpacing: 5),
+            crossAxisCount: 3, mainAxisSpacing: 5, crossAxisSpacing: 5,childAspectRatio:3:4),
         itemBuilder: (BuildContext context, int index) {
           return GridTile(
             child: InkWell(
