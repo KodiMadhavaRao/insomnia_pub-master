@@ -19,16 +19,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  carousel_slider: ^1.3.0
+#  carousel_slider: ^1.3.0
   http: ^0.12.0+2
   datetime_picker_formfield: any
-  flutter_localizations:
-      sdk: flutter
-  flutter_cupertino_localizations: any
+#  flutter_localizations:
+#      sdk: flutter
+#  flutter_cupertino_localizations: any
   url_launcher: ^5.1.2
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+#  cupertino_icons: ^0.1.2
   cached_network_image: ^1.1.1
   fluttertoast: ^3.1.0
 
@@ -74,7 +74,12 @@ flutter:
     - images/Packages_3.png
     - images/Feedback_3.png
     - images/bg_1x.png
-    - images/background_cd.jpg
+    - images/about_banner.png
+    - images/gallery_banner.jpg
+    - images/offer_banner.jpg
+    - images/reservationtable_banner.jpg
+    - images/event_banner.jpg
+    - images/splash_screen.jpg
   #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
