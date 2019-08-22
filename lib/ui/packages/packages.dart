@@ -17,7 +17,8 @@ class Packages extends StatefulWidget {
 class PackagesState extends State<Packages> {
   @override
   Widget build(BuildContext context) {
-    return ProgressWidget(isLoading: loadingStatus, child: getMainView(context));
+    return ProgressWidget(
+        isLoading: loadingStatus, child: getMainView(context));
   }
 
   PackageListDTO packageListDTO;
@@ -26,13 +27,15 @@ class PackagesState extends State<Packages> {
   @override
   void initState() {
     loadingStatus = true;
-    AppHttpRequest.getEventListResponse().then((response) {
+    AppHttpRequest.getPackagesResponse().then((response) {
       setState(() {
         loadingStatus = false;
-        try {
-          packageListDTO = PackageListDTO.fromJson(response);
-        } catch (e) {
-          print("EXCEPTION : " + e);
+        if (response['status'] == Constants.success) {
+          try {
+            packageListDTO = PackageListDTO.fromJson(response);
+          } catch (e) {
+            print("EXCEPTION : " + e);
+          }
         }
       });
     });
@@ -75,13 +78,15 @@ class PackagesState extends State<Packages> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                        color: Constants.COLORMAIN, fontSize: 12, fontWeight: FontWeight.w400),
+                        color: Constants.COLORMAIN,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 25),
                   child: Text(
-//                offerList.message[index].specialOffersText,
+//                packageListDTO.message[index].specialOffersText,
                     '(freshly backed bread herbed with exotic veggies and loaded with cheese)',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -95,15 +100,12 @@ class PackagesState extends State<Packages> {
     return gridView;
   }
 
-
-void openTableBookingDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (_) => customDialog.Dialog(
-          child: TableBooking(true),
-        ),
-  );
-}
-
-
+  void openTableBookingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => customDialog.Dialog(
+        child: TableBooking(true),
+      ),
+    );
+  }
 }
