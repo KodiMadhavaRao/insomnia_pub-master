@@ -18,9 +18,9 @@ class MainHome extends StatefulWidget {
 }
 
 class MainHomeState extends State<MainHome> {
-  List<String> alIcons = new List();
-  List<String> description = new List();
-  List<int> ids = new List();
+  List<String> alIcons;
+  List<String> description;
+  List<int> ids;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +29,7 @@ class MainHomeState extends State<MainHome> {
 
   @override
   void initState() {
+    super.initState();
     alIcons = [
       "images/Events_3.png",
       "images/Special Offers_3.png",
@@ -78,8 +79,8 @@ class MainHomeState extends State<MainHome> {
           Container(
             height: mapHeight,
             decoration: BoxDecoration(
-              color: Colors.grey.withAlpha(150),
-              /*gradient: LinearGradient(
+//              color: Colors.grey.withAlpha(150),
+                /*gradient: LinearGradient(
                     begin: FractionalOffset.topCenter,
                     end: FractionalOffset.bottomCenter,
                     colors: [
@@ -90,7 +91,7 @@ class MainHomeState extends State<MainHome> {
                       0.0,
                       1.0
                     ])*/
-            ),
+                ),
           ),
           Positioned.fill(
             child: Align(
@@ -101,23 +102,36 @@ class MainHomeState extends State<MainHome> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(left: 20.0, right: 8.0),
-                    child: Icon(
-                      Icons.arrow_forward,
-                      size: 30,
-                      color: Colors.yellow,
+                    child: Card(
+                      shape: CircleBorder(),
+                      child: Icon(
+                        Icons.arrow_forward,
+                        size: 30,
+                        color: Colors.yellow,
+                      ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                    child: Icon(
-                      Icons.arrow_forward,
-                      size: 30,
-                      color: Colors.yellow,
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Card(
+                      shape: CircleBorder(),
+                      child: Icon(
+                        Icons.arrow_forward,
+                        size: 30,
+                        color: Colors.yellow,
+                      ),
                     ),
                   ),
                   Text(
                     "Find Me",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+//                      shadows: [
+//                        Shadow(color: Colors.black, blurRadius: 5),
+//                      ],
+                    ),
                   )
                 ],
               ),
@@ -130,11 +144,7 @@ class MainHomeState extends State<MainHome> {
 
   Widget getHomeView() {
     var gridView = new GridView.builder(
-        padding: EdgeInsets.only(
-            top: 25,
-            left: 50,
-            right: 50,
-            bottom: 50),
+        padding: EdgeInsets.only(top: 25, left: 50, right: 50, bottom: 50),
         shrinkWrap: true,
         itemCount: 6,
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(

@@ -5,6 +5,7 @@ import 'package:insomnia_pub/util/Utils.dart';
 import 'package:insomnia_pub/util/constants.dart';
 import 'package:insomnia_pub/util/progress_indicator.dart';
 
+import 'SignUpScreen.dart';
 import 'home/home_screen.dart';
 
 class AuthenticationScreen extends StatefulWidget {
@@ -41,6 +42,16 @@ class _AutenticationState extends State<AuthenticationScreen> {
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: Text(
+                  "INSOMNIA",
+                  style: TextStyle(
+                      fontSize: 35,
+                      letterSpacing: 5,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
               _buildTextFields(),
             ],
           ),
@@ -75,7 +86,8 @@ class _AutenticationState extends State<AuthenticationScreen> {
                   borderSide: BorderSide(width: 2, color: Constants.COLORMAIN),
                 ),
               ),
-              keyboardType: TextInputType.phone,
+              keyboardType:
+                  TextInputType.numberWithOptions(decimal: false, signed: true),
             ),
           ),
           new Container(
@@ -108,14 +120,17 @@ class _AutenticationState extends State<AuthenticationScreen> {
       return;
     }
 
+    setState(() {
+      isLoadingState = true;
+    });
     AppHttpRequest.loginRequest(_mobileNumber.text).then((response) {
-      if (response  is Map) {
+      if (response is Map) {
         if (response['status'] == 'error') {
-          Utils.showToast(response['message'], Colors.red, Colors.white, 10.0);
-          /*todo remove this latter*/
+          Utils.showToast(
+              response['message'], Colors.red[900], Colors.white, 10.0);
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) =>
-                  OTPScreenWidget(number: _mobileNumber.text)));
+                  SignUpScreen(number: _mobileNumber.text)));
         } else if (response['status'] == 'success') {
           /* Navigator.pushAndRemoveUntil(
               context,

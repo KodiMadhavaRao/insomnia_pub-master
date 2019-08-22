@@ -8,7 +8,11 @@ import 'package:insomnia_pub/util/progress_indicator.dart';
 import 'home/home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
+  final String number;
+
   State<StatefulWidget> createState() => SignUpScreenState();
+
+  SignUpScreen({this.number = ""});
 }
 
 class SignUpScreenState extends State<SignUpScreen> {
@@ -22,7 +26,7 @@ class SignUpScreenState extends State<SignUpScreen> {
 
   initState() {
     super.initState();
-    _mobileNumber = new TextEditingController();
+    _mobileNumber = new TextEditingController(text: widget.number);
     _userName = new TextEditingController();
   }
 
@@ -42,6 +46,16 @@ class SignUpScreenState extends State<SignUpScreen> {
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: Text(
+                  "INSOMNIA",
+                  style: TextStyle(
+                      fontSize: 35,
+                      letterSpacing: 5,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
               _buildTextFields(),
 //            _buildButtons(),
             ],
@@ -99,7 +113,8 @@ class SignUpScreenState extends State<SignUpScreen> {
                   borderSide: BorderSide(width: 2, color: Constants.COLORMAIN),
                 ),
               ),
-              keyboardType: TextInputType.phone,
+              keyboardType:
+                  TextInputType.numberWithOptions(decimal: false, signed: true),
             ),
           ),
           new Container(
@@ -127,25 +142,26 @@ class SignUpScreenState extends State<SignUpScreen> {
 
   void _SignUpPressed() {
     if (_userName.text.isEmpty) {
-      Utils.showToast("Invalid User Name", Colors.redAccent, Colors.white);
+      Utils.showToast("Invalid User Name", Colors.redAccent[700], Colors.white);
       return;
     }
     if (_mobileNumber.text.isEmpty || _mobileNumber.text.length < 10) {
-      Utils.showToast("Invalid mobile number", Colors.redAccent, Colors.white);
+      Utils.showToast(
+          "Invalid mobile number", Colors.redAccent[700], Colors.white);
       return;
     }
+
+    setState(() {
+      isLoadingState = true;
+    });
 
     AppHttpRequest.singUpRequest(_userName.text, _mobileNumber.text)
         .then((response) {
       if (response is Map) {
         if (response['status'] == 'error') {
           Utils.showToast(
-              response['message'], Colors.redAccent, Colors.white, 10.0);
-          /*todo remove this latter*/
-          Navigator.of(context).pushReplacement(new MaterialPageRoute(
-              builder: (BuildContext context) =>
-                  OTPScreenWidget(number: _mobileNumber.text)));
-        } else if (response['status'] == 'sucess') {
+              response['message'], Colors.redAccent[700], Colors.white, 10.0);
+        } else if (response['status'] == 'success') {
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) =>
                   OTPScreenWidget(number: _mobileNumber.text)));

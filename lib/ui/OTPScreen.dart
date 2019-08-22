@@ -44,6 +44,16 @@ class OTPScreenState extends State<OTPScreenWidget> {
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: Text(
+                  "INSOMNIA",
+                  style: TextStyle(
+                      fontSize: 35,
+                      letterSpacing: 5,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
               _buildTextFields(),
             ],
           ),
@@ -78,7 +88,8 @@ class OTPScreenState extends State<OTPScreenWidget> {
                   borderSide: BorderSide(width: 2, color: Constants.COLORMAIN),
                 ),
               ),
-              keyboardType: TextInputType.phone,
+              keyboardType:
+                  TextInputType.numberWithOptions(decimal: false, signed: true),
             ),
           ),
           new Container(
@@ -115,24 +126,11 @@ class OTPScreenState extends State<OTPScreenWidget> {
       if (response is Map) {
         if (response['status'] == 'error') {
           Utils.showToast(
-              response['message'], Colors.redAccent, Colors.white, 10.0);
-          /*todo remove this latter*/
+              response['message'], Colors.redAccent[800], Colors.white, 10.0);
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) =>
                   MyHomePage(title: "Insomnia")));
-          /*  Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => MyHomePage(title: "Insomnia")),
-              ModalRoute.withName("/"));*/
         } else if (response['status'] == 'success') {
-/*
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => MyHomePage(title: "Insomnia")),
-              ModalRoute.withName("/"));
-*/
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) =>
                   MyHomePage(title: "Insomnia")));
