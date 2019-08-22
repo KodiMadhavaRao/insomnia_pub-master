@@ -104,23 +104,27 @@ class _AutenticationState extends State<AuthenticationScreen> {
   void _loginPressed() {
 //    print('The user wants to login with  and $_mobile');
     if (_mobileNumber.text.isEmpty || _mobileNumber.text.length < 10) {
-      Utils.showToast("Invalid mobile number", Colors.redAccent, Colors.white);
+      Utils.showToast("Invalid mobile number", Colors.red, Colors.white);
       return;
     }
 
     AppHttpRequest.loginRequest(_mobileNumber.text).then((response) {
       if (response is Map) {
         if (response['status'] == 'error') {
-          Utils.showToast(
-              response['message'], Colors.redAccent, Colors.white, 10.0);
+          Utils.showToast(response['message'], Colors.red, Colors.white, 10.0);
           /*todo remove this latter*/
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) =>
                   OTPScreenWidget(number: _mobileNumber.text)));
         } else if (response['status'] == 'success') {
+          /* Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MyHomePage(title: "Insomnia")),
+              ModalRoute.withName("/"));*/
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) =>
-                  MyHomePage(title: "Insomnia")));
+                  OTPScreenWidget(number: _mobileNumber.text)));
         }
 
         setState(() {

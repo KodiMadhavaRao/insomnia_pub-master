@@ -111,7 +111,7 @@ class OTPScreenState extends State<OTPScreenWidget> {
       return;
     }
 
-    AppHttpRequest.otpValidation(widget.number,_pwdOtp.text).then((response) {
+    AppHttpRequest.otpValidation(widget.number, _pwdOtp.text).then((response) {
       if (response is Map) {
         if (response['status'] == 'error') {
           Utils.showToast(
@@ -120,7 +120,19 @@ class OTPScreenState extends State<OTPScreenWidget> {
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) =>
                   MyHomePage(title: "Insomnia")));
+          /*  Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MyHomePage(title: "Insomnia")),
+              ModalRoute.withName("/"));*/
         } else if (response['status'] == 'sucess') {
+/*
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MyHomePage(title: "Insomnia")),
+              ModalRoute.withName("/"));
+*/
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) =>
                   MyHomePage(title: "Insomnia")));
