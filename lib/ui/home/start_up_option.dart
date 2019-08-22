@@ -15,14 +15,16 @@ class SignInOrSignUp extends StatelessWidget {
     return Scaffold(
       body: Container(
         height: double.infinity,
-        decoration:
-            BoxDecoration(image: DecorationImage(image: AssetImage(backImg), fit: BoxFit.cover)),
+        decoration: BoxDecoration(
+            image:
+                DecorationImage(image: AssetImage(backImg), fit: BoxFit.cover)),
         child: Stack(
           children: <Widget>[
             Center(
               child: Container(
                 margin: const EdgeInsets.all(48.0),
-                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 48.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0, vertical: 48.0),
                 decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.6),
                     borderRadius: BorderRadius.circular(10.0)),
@@ -49,8 +51,10 @@ class SignInOrSignUp extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 20.0),
-                      Text("Night you won't forget",
-                          textAlign: TextAlign.center, style: TextStyle(fontSize: 18.0)),
+                      Text("night you won't forget",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 16.0, fontWeight: FontWeight.w300)),
                       const SizedBox(height: 30.0),
                       SizedBox(
                         width: double.infinity,
@@ -58,12 +62,16 @@ class SignInOrSignUp extends StatelessWidget {
                         child: RaisedButton(
                           elevation: 0,
                           highlightElevation: 0,
-                          color: Colors.white.withAlpha(100),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-                          child: Text("Login"),
+                          color: Constants.COLORMAIN.withAlpha(180),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          child: Text("LOGIN",
+                              style: TextStyle(fontWeight: FontWeight.w300)),
                           onPressed: () {
-                            Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                                builder: (BuildContext context) => AuthenticationScreen()));
+                            Navigator.of(context).pushReplacement(
+                                new MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        AuthenticationScreen()));
                           },
                         ),
                       ),
@@ -79,12 +87,18 @@ class SignInOrSignUp extends StatelessWidget {
                         child: RaisedButton(
                           elevation: 0,
                           highlightElevation: 0,
-                          color: Colors.white.withAlpha(100),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-                          child: Text("Create a New Account"),
+                          color: Constants.COLORMAIN.withAlpha(180),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          child: Text(
+                            "CREATE A ACCOUNT",
+                            style: TextStyle(fontWeight: FontWeight.w300),
+                          ),
                           onPressed: () {
-                            Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                                builder: (BuildContext context) => SignUpScreen()));
+                            Navigator.of(context).pushReplacement(
+                                new MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        SignUpScreen()));
                           },
                         ),
                       )
