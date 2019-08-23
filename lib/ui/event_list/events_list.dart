@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:insomnia_pub/dtos/event_list_dto.dart';
@@ -48,29 +49,59 @@ class EventsListState extends State<EventsList> {
         gridDelegate:
             new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 8.0,mainAxisSpacing: 35.0),
         itemBuilder: (BuildContext context, int index) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Flexible(
-                flex:1,
-                child: Image.network(
-                    eventL1istDTO.message[index].image,
-//                  'https://source.unsplash.com/210x210/?pub&party',
-                  fit: BoxFit.cover,
-                  height: double.infinity,
-                  width: double.infinity,
-                  alignment: Alignment.center,
+          return InkWell(
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (_) => new AlertDialog(
+                    content: CachedNetworkImage(
+                      imageUrl: eventL1istDTO.message[index].image,
+                      placeholder: (context, url) => Container(
+                        child: new CircularProgressIndicator(
+                            valueColor:
+                            new AlwaysStoppedAnimation(Colors.blue),
+                            strokeWidth: 5.0),
+                        height: 30,
+                        width: 30,
+                        alignment: Alignment.center,
+                        ),
+                      errorWidget: (context, url, error) =>
+                      new Icon(Icons.error),
+                      ),
+                    ));
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Flexible(
+                  flex:1,
+                  child: CachedNetworkImage(
+                    imageUrl: eventL1istDTO.message[index].image,
+                    placeholder: (context, url) => Container(
+                      child: new CircularProgressIndicator(
+                          valueColor: new AlwaysStoppedAnimation(Colors.blue),
+                          strokeWidth: 5.0),
+                      height: 30,
+                      width: 30,
+                      alignment: Alignment.center,
+                      ),
+                    errorWidget: (context, url, error) => new Icon(Icons.error),
+                    height: double.infinity,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    fit: BoxFit.cover,
+                    ),
                 ),
-              ),
-               Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  eventL1istDTO.message[index].eventText,
-                  maxLines: 2,
-                  style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300),
-                ),
-              )
-            ],
+                 Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    eventL1istDTO.message[index].eventText,
+                    maxLines: 2,
+                    style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300),
+                  ),
+                )
+              ],
+            ),
           );
         });
     return gridView;

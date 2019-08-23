@@ -6,6 +6,8 @@ import 'package:insomnia_pub/net/http_nw.dart';
 import 'package:insomnia_pub/util/constants.dart';
 import 'package:insomnia_pub/util/number_counter.dart';
 import 'package:insomnia_pub/util/progress_indicator.dart';
+import 'package:insomnia_pub/util/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TableBooking extends StatefulWidget {
   bool showCloseButton;
@@ -28,6 +30,7 @@ class TableBookingState extends State<TableBooking> {
   DateTime currentDate;
   TimeOfDay currentTime;
 
+  int iUserid,iMobileNo;
   @override
   void initState() {
     super.initState();
@@ -35,7 +38,12 @@ class TableBookingState extends State<TableBooking> {
     currentTime = TimeOfDay.now();
     widget.showCloseButton = widget.showCloseButton == null ? false : widget.showCloseButton;
     dropDownValue = 1;
-//    currentTime.format(context);
+    SharedPrefencesHelper.getUserId().then((int userId){
+      iUserid=userId;
+    });
+    SharedPrefencesHelper.getMobileNo().then((int mobileNo){
+      numberController.text=mobileNo.toString();
+    });
   }
 
   @override
@@ -62,7 +70,7 @@ class TableBookingState extends State<TableBooking> {
             ),
             "Your Name",
             TextInputType.text,
-            nameController),
+            nameController,),
         getLabelvalueView(
             "EMAIL ADDRESS",
             Icon(
@@ -284,7 +292,7 @@ class TableBookingState extends State<TableBooking> {
           child: Text("Reserve Table"),
           onPressed: () {
             setState(() {
-              loadingStatus=true;
+              loadingStatus = true;
             });
             AppHttpRequest.saveTableReservation(formMapData()).then((String body) {
               handleTableBookingSaveResponse(body);
@@ -441,7 +449,7 @@ class TableBookingState extends State<TableBooking> {
 
   Map<String, String> formMapData() {
     Map<String, String> resrevationData = new HashMap();
-    resrevationData["user_id"] = "123";
+    resrevationData["user_id"] = iUserid.toString();
     resrevationData["user_name"] = nameController.text;
     resrevationData["user_mobile"] = numberController.text;
     resrevationData["males"] = maleCount.toString();
@@ -466,7 +474,7 @@ class TableBookingState extends State<TableBooking> {
 
   void handleTableBookingSaveResponse(String body) {
     setState(() {
-      loadingStatus=false;
+      loadingStatus = false;
     });
     Map<String, dynamic> jsonData = json.decode(body);
     if (jsonData["status"] == "success") {
@@ -477,8 +485,7 @@ class TableBookingState extends State<TableBooking> {
           timeInSecForIos: 1,
           backgroundColor: Constants.COLORMAIN,
           textColor: Colors.white,
-          fontSize: 16.0
-          );
+          fontSize: 16.0);
     } else {
       Fluttertoast.showToast(
           msg: jsonData["message"],
@@ -487,8 +494,8 @@ class TableBookingState extends State<TableBooking> {
           timeInSecForIos: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
-          fontSize: 16.0
-          );
+          fontSize: 16.0);
     }
   }
+
 }

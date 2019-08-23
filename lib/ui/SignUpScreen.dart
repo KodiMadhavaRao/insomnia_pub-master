@@ -4,6 +4,8 @@ import 'package:insomnia_pub/ui/OTPScreen.dart';
 import 'package:insomnia_pub/util/Utils.dart';
 import 'package:insomnia_pub/util/constants.dart';
 import 'package:insomnia_pub/util/progress_indicator.dart';
+import 'package:insomnia_pub/util/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home/home_screen.dart';
 
@@ -17,7 +19,7 @@ class SignUpScreen extends StatefulWidget {
 
 class SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _mobileNumber;
-
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 //  String _mobile = "";
 
   bool isLoadingState = false;
@@ -28,6 +30,7 @@ class SignUpScreenState extends State<SignUpScreen> {
     super.initState();
     _mobileNumber = new TextEditingController(text: widget.number);
     _userName = new TextEditingController();
+
   }
 
   @override
@@ -162,6 +165,8 @@ class SignUpScreenState extends State<SignUpScreen> {
           Utils.showToast(
               response['message'], Colors.redAccent[700], Colors.white, 10.0);
         } else if (response['status'] == 'success') {
+          SharedPrefencesHelper.setMobileNo(int.parse(_mobileNumber.text));
+          SharedPrefencesHelper.setUserName(_userName.text);
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) =>
                   OTPScreenWidget(number: _mobileNumber.text)));

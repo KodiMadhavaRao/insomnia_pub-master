@@ -4,7 +4,8 @@ import 'package:insomnia_pub/ui/OTPScreen.dart';
 import 'package:insomnia_pub/util/Utils.dart';
 import 'package:insomnia_pub/util/constants.dart';
 import 'package:insomnia_pub/util/progress_indicator.dart';
-
+import 'package:insomnia_pub/util/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'SignUpScreen.dart';
 import 'home/home_screen.dart';
 
@@ -132,6 +133,8 @@ class _AutenticationState extends State<AuthenticationScreen> {
               builder: (BuildContext context) =>
                   SignUpScreen(number: _mobileNumber.text)));
         } else if (response['status'] == 'success') {
+          SharedPrefencesHelper.setUserId(int.parse(response['id']));
+          SharedPrefencesHelper.setMobileNo(int.parse(_mobileNumber.text));
           /* Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:insomnia_pub/dtos/offer_list_dto.dart';
@@ -48,42 +49,72 @@ class OffersWidgetsState extends State<OffersWidgets> {
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, mainAxisSpacing: 25,crossAxisSpacing: 8.0),
         itemBuilder: (BuildContext context, int index) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
+          return InkWell(
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (_) => new AlertDialog(
+                    content: CachedNetworkImage(
+                      imageUrl: offerList.message[index].image,
+                      placeholder: (context, url) => Container(
+                        child: new CircularProgressIndicator(
+                            valueColor:
+                            new AlwaysStoppedAnimation(Colors.blue),
+                            strokeWidth: 5.0),
+                        height: 30,
+                        width: 30,
+                        alignment: Alignment.center,
+                        ),
+                      errorWidget: (context, url, error) =>
+                      new Icon(Icons.error),
+                      ),
+                    ));
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
 //                flex: 1,
-                child: Image.network(
-                    offerList.message[index].image,
-//                  'https://source.unsplash.com/210x210/?food',
-                  fit: BoxFit.cover,
-                  height: double.infinity,
-                  width: double.infinity,
-                  alignment: Alignment.center,
+                  child: CachedNetworkImage(
+                    imageUrl: offerList.message[index].image,
+                    placeholder: (context, url) => Container(
+                      child: new CircularProgressIndicator(
+                          valueColor: new AlwaysStoppedAnimation(Colors.blue),
+                          strokeWidth: 5.0),
+                      height: 30,
+                      width: 30,
+                      alignment: Alignment.center,
+                      ),
+                    errorWidget: (context, url, error) => new Icon(Icons.error),
+                    height: double.infinity,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    fit: BoxFit.cover,
+                    ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 2, bottom: 2),
-                child: Text(
-                  offerList.message[index].specialOffersText,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      color: Constants.COLORMAIN,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400),
+                Padding(
+                  padding: const EdgeInsets.only(top: 2, bottom: 2),
+                  child: Text(
+                    offerList.message[index].specialOffersText,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: Constants.COLORMAIN,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 25),
-                child: Text(
-                  offerList.message[index].specialOffersText,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-                ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 25),
+                  child: Text(
+                    offerList.message[index].specialOffersText,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                  ),
+                )
+              ],
+            ),
           );
         });
     return gridView;
