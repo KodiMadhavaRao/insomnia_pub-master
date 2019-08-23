@@ -87,7 +87,7 @@ class PackagesState extends State<Packages> {
                   padding: const EdgeInsets.only(right: 25),
                   child: Text(
 //                packageListDTO.message[index].specialOffersText,
-                    '(freshly backed bread herbed with exotic veggies and loaded with cheese)',
+                    'TO DO',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
