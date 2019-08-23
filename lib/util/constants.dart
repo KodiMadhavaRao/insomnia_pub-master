@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Constants{
-
+class Constants {
   static const int MAINHOME = 0;
   static const int EVENTS = 1;
   static const int OFFERS = 2;
@@ -11,4 +10,6 @@ class Constants{
   static const int FEEDBACK = 6;
 
   static const Color COLORMAIN = Color(0xffc8a203);
+  static const String error = "error";
+  static const String success = "success";
 }
