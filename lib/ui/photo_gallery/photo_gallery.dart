@@ -19,6 +19,7 @@ class PhotoGalleryState extends State<PhotoGallery> {
 
   @override
   void initState() {
+    super.initState();
     loadingStatus = true;
     AppHttpRequest.getEventListResponse().then((response) {
       setState(() {
@@ -46,7 +47,7 @@ class PhotoGalleryState extends State<PhotoGallery> {
         shrinkWrap: true,
         itemCount: galleryListDTO.message.length,
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, mainAxisSpacing: 5, crossAxisSpacing: 5,childAspectRatio:3:4),
+            crossAxisCount: 3, mainAxisSpacing: 5, crossAxisSpacing: 5),
         itemBuilder: (BuildContext context, int index) {
           return GridTile(
             child: InkWell(
@@ -57,26 +58,29 @@ class PhotoGalleryState extends State<PhotoGallery> {
                             content: CachedNetworkImage(
                               imageUrl: galleryListDTO.message[index].image,
                               placeholder: (context, url) => Container(
-                                    child: new CircularProgressIndicator(
-                                        valueColor: new AlwaysStoppedAnimation(Colors.blue),
-                                        strokeWidth: 5.0),
-                                    height: 30,
-                                    width: 30,
-                                    alignment: Alignment.center,
-                                  ),
-                              errorWidget: (context, url, error) => new Icon(Icons.error),
+                                child: new CircularProgressIndicator(
+                                    valueColor:
+                                        new AlwaysStoppedAnimation(Colors.blue),
+                                    strokeWidth: 5.0),
+                                height: 30,
+                                width: 30,
+                                alignment: Alignment.center,
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  new Icon(Icons.error),
                             ),
                           ));
                 },
                 child: CachedNetworkImage(
                   imageUrl: galleryListDTO.message[index].image,
                   placeholder: (context, url) => Container(
-                        child: new CircularProgressIndicator(
-                            valueColor: new AlwaysStoppedAnimation(Colors.blue), strokeWidth: 5.0),
-                        height: 30,
-                        width: 30,
-                        alignment: Alignment.center,
-                      ),
+                    child: new CircularProgressIndicator(
+                        valueColor: new AlwaysStoppedAnimation(Colors.blue),
+                        strokeWidth: 5.0),
+                    height: 30,
+                    width: 30,
+                    alignment: Alignment.center,
+                  ),
                   errorWidget: (context, url, error) => new Icon(Icons.error),
                   height: double.infinity,
                   width: double.infinity,
