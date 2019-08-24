@@ -46,35 +46,35 @@ class EventsListState extends State<EventsList> {
     var gridView = new GridView.builder(
         shrinkWrap: true,
         itemCount: eventL1istDTO.message.length,
-        gridDelegate:
-            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 8.0,mainAxisSpacing: 35.0),
+        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, crossAxisSpacing: 8.0, mainAxisSpacing: 35.0),
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
               showDialog(
                   context: context,
                   builder: (_) => new AlertDialog(
-                    content: CachedNetworkImage(
-                      imageUrl: eventL1istDTO.message[index].image,
-                      placeholder: (context, url) => Container(
-                        child: new CircularProgressIndicator(
-                            valueColor:
-                            new AlwaysStoppedAnimation(Colors.blue),
-                            strokeWidth: 5.0),
-                        height: 30,
-                        width: 30,
-                        alignment: Alignment.center,
+                        content: CachedNetworkImage(
+                          imageUrl: eventL1istDTO.message[index].image,
+                          placeholder: (context, url) => Container(
+                            child: new CircularProgressIndicator(
+                                valueColor:
+                                    new AlwaysStoppedAnimation(Colors.blue),
+                                strokeWidth: 5.0),
+                            height: 30,
+                            width: 30,
+                            alignment: Alignment.center,
+                          ),
+                          errorWidget: (context, url, error) =>
+                              new Icon(Icons.error),
                         ),
-                      errorWidget: (context, url, error) =>
-                      new Icon(Icons.error),
-                      ),
-                    ));
+                      ));
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Flexible(
-                  flex:1,
+                  flex: 1,
                   child: CachedNetworkImage(
                     imageUrl: eventL1istDTO.message[index].image,
                     placeholder: (context, url) => Container(
@@ -84,20 +84,20 @@ class EventsListState extends State<EventsList> {
                       height: 30,
                       width: 30,
                       alignment: Alignment.center,
-                      ),
+                    ),
                     errorWidget: (context, url, error) => new Icon(Icons.error),
                     height: double.infinity,
                     width: double.infinity,
                     alignment: Alignment.center,
-                    fit: BoxFit.cover,
-                    ),
+                    fit: BoxFit.fill,
+                  ),
                 ),
-                 Padding(
+                Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
                     eventL1istDTO.message[index].eventText,
                     maxLines: 2,
-                    style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300),
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
                   ),
                 )
               ],
