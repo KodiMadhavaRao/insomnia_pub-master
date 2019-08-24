@@ -26,6 +26,7 @@ class PackagesState extends State<Packages> {
 
   @override
   void initState() {
+    super.initState();
     loadingStatus = true;
     AppHttpRequest.getPackagesResponse().then((response) {
       setState(() {
@@ -50,7 +51,10 @@ class PackagesState extends State<Packages> {
         shrinkWrap: true,
         itemCount: packageListDTO.message.length,
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: 1, crossAxisCount: 2, mainAxisSpacing: 25),
+            childAspectRatio: 1,
+            crossAxisCount: 2,
+            crossAxisSpacing: 15,
+            mainAxisSpacing: 25),
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
@@ -64,14 +68,14 @@ class PackagesState extends State<Packages> {
                   child: LimitedBox(
                     child: Image.network(
                       packageListDTO.message[index].image,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                       height: double.infinity,
                       width: double.infinity,
                       alignment: Alignment.center,
                     ),
                   ),
                 ),
-                Padding(
+                /*Padding(
                   padding: const EdgeInsets.only(top: 2, bottom: 2),
                   child: Text(
                     'Chees overloaded garlic bread',
@@ -92,7 +96,7 @@ class PackagesState extends State<Packages> {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                   ),
-                )
+                )*/
               ],
             ),
           );
