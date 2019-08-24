@@ -47,28 +47,28 @@ class OffersWidgetsState extends State<OffersWidgets> {
         shrinkWrap: true,
         itemCount: offerList.message.length,
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, mainAxisSpacing: 25,crossAxisSpacing: 8.0),
+            crossAxisCount: 2, mainAxisSpacing: 25, crossAxisSpacing: 8.0),
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
               showDialog(
                   context: context,
                   builder: (_) => new AlertDialog(
-                    content: CachedNetworkImage(
-                      imageUrl: offerList.message[index].image,
-                      placeholder: (context, url) => Container(
-                        child: new CircularProgressIndicator(
-                            valueColor:
-                            new AlwaysStoppedAnimation(Colors.blue),
-                            strokeWidth: 5.0),
-                        height: 30,
-                        width: 30,
-                        alignment: Alignment.center,
+                        content: CachedNetworkImage(
+                          imageUrl: offerList.message[index].image,
+                          placeholder: (context, url) => Container(
+                            child: new CircularProgressIndicator(
+                                valueColor:
+                                    new AlwaysStoppedAnimation(Colors.blue),
+                                strokeWidth: 5.0),
+                            height: 30,
+                            width: 30,
+                            alignment: Alignment.center,
+                          ),
+                          errorWidget: (context, url, error) =>
+                              new Icon(Icons.error),
                         ),
-                      errorWidget: (context, url, error) =>
-                      new Icon(Icons.error),
-                      ),
-                    ));
+                      ));
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,13 +84,13 @@ class OffersWidgetsState extends State<OffersWidgets> {
                       height: 30,
                       width: 30,
                       alignment: Alignment.center,
-                      ),
+                    ),
                     errorWidget: (context, url, error) => new Icon(Icons.error),
                     height: double.infinity,
                     width: double.infinity,
                     alignment: Alignment.center,
-                    fit: BoxFit.cover,
-                    ),
+                    fit: BoxFit.fill,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 2, bottom: 2),
