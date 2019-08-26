@@ -4,6 +4,7 @@ import 'package:insomnia_pub/util/Utils.dart';
 import 'package:insomnia_pub/util/constants.dart';
 import 'package:insomnia_pub/util/feedback_bar.dart';
 import 'package:insomnia_pub/util/progress_indicator.dart';
+import 'package:insomnia_pub/util/shared_preferences.dart';
 
 class FeedBackWidget extends StatefulWidget {
   @override
@@ -139,7 +140,7 @@ class FeedBackWidgetState extends State<FeedBackWidget> {
       );
   }
 
-  void onSubmitRatting() {
+  void onSubmitRatting() async {
     if (foodRatting == 0) {
       Utils.showToast("Please rate our Food", Colors.redAccent, Colors.white);
       return;
@@ -156,7 +157,8 @@ class FeedBackWidgetState extends State<FeedBackWidget> {
           "Please rate our Over all", Colors.redAccent, Colors.white);
       return;
     }
-    AppHttpRequest.submitFeedBack(121, foodRatting, serviceRatting,
+    int iuserid=  await SharedPrefencesHelper.getUserId();
+    AppHttpRequest.submitFeedBack(iuserid, foodRatting, serviceRatting,
                                       settingRatting, overAllRatting, reviewText.text)
         .then((response) {
       setState(() {

@@ -81,6 +81,10 @@ flutter:
     - images/reservationtable_banner.jpg
     - images/event_banner.jpg
     - images/splash_screen.jpg
+    - images/home_sl_1.jpg
+    - images/home_sl_2.jpg
+    - images/home_sl_3.jpg
+    - images/home_sl_4.jpg
   #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

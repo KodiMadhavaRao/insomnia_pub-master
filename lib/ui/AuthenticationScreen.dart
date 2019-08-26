@@ -134,6 +134,7 @@ class _AutenticationState extends State<AuthenticationScreen> {
                   SignUpScreen(number: _mobileNumber.text)));
         } else if (response['status'] == 'success') {
           SharedPrefencesHelper.setUserId(int.parse(response['id']));
+          SharedPrefencesHelper.setUserName(response['user_name']);
           SharedPrefencesHelper.setMobileNo(int.parse(_mobileNumber.text));
           /* Navigator.pushAndRemoveUntil(
               context,

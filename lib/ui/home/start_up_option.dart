@@ -43,7 +43,7 @@ class SignInOrSignUp extends StatelessWidget {
                         fit: BoxFit.fill,
                       ),
                       const SizedBox(height: 10.0),
-                      Text(
+                    /*  Text(
                         "Night Club",
                         style: TextStyle(
                             color: Constants.COLORMAIN,
@@ -54,7 +54,7 @@ class SignInOrSignUp extends StatelessWidget {
                       Text("night you won't forget",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: 16.0, fontWeight: FontWeight.w300)),
+                              fontSize: 16.0, fontWeight: FontWeight.w300)),*/
                       const SizedBox(height: 30.0),
                       SizedBox(
                         width: double.infinity,

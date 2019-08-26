@@ -1,10 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:insomnia_pub/dtos/gallery_list_dto.dart';
-import 'package:insomnia_pub/dtos/gallery_list_dto.dart';
 import 'package:insomnia_pub/net/http_nw.dart';
-import 'package:insomnia_pub/util/constants.dart';
 import 'package:insomnia_pub/util/progress_indicator.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class PhotoGallery extends StatefulWidget {
   @override
@@ -21,7 +19,7 @@ class PhotoGalleryState extends State<PhotoGallery> {
   void initState() {
     super.initState();
     loadingStatus = true;
-    AppHttpRequest.getEventListResponse().then((response) {
+    AppHttpRequest.getGalleryResponse().then((response) {
       setState(() {
         loadingStatus = false;
         try {
@@ -59,6 +57,8 @@ class PhotoGalleryState extends State<PhotoGallery> {
                       context: context,
                       builder: (_) => new AlertDialog(
                             content: CachedNetworkImage(
+//                              height: double.maxFinite,
+//                              width: double.maxFinite,
                               imageUrl: galleryListDTO.message[index].image,
                               placeholder: (context, url) => Container(
                                 child: new CircularProgressIndicator(

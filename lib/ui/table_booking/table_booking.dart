@@ -26,7 +26,8 @@ class TableBookingState extends State<TableBooking> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController numberController = new TextEditingController();
   int dropDownValue;
-  int maleCount, femaleCount;
+  int maleCount=0, femaleCount=0;
+  int iTotalCount=0;
   DateTime currentDate;
   TimeOfDay currentTime;
 
@@ -58,7 +59,7 @@ class TableBookingState extends State<TableBooking> {
 
   Column createForm() {
     return Column(
-      mainAxisSize: MainAxisSize.max,
+      mainAxisSize: widget.showCloseButton?MainAxisSize.min:MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         showCloseButton(),
@@ -128,6 +129,7 @@ class TableBookingState extends State<TableBooking> {
   }
 
   Widget getGuestsView() {
+    iTotalCount=maleCount+femaleCount;
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Row(
@@ -178,21 +180,10 @@ class TableBookingState extends State<TableBooking> {
                   ),
                 ),
                 Container(
-//                width: double.infinity,
+                width: double.infinity,
                   height: 35,
                   color: Colors.white,
-                  child: DropdownButtonHideUnderline(
-                    child: Theme(
-                      data: ThemeData.light(),
-                      child: DropdownButton(
-                        value: dropDownValue,
-                        isExpanded: true,
-                        items: getItem(),
-                        onChanged: onDropDownChange,
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ),
+                  child: Align(child: Container(child: Text(iTotalCount.toString()+" Persons",style: TextStyle(color: Colors.black,fontSize: 18),),),),
                 ),
               ],
             ),
@@ -224,11 +215,16 @@ class TableBookingState extends State<TableBooking> {
   }
 
   void onMaleChange(int value) {
-    maleCount = value;
+    setState(() {
+      maleCount = value;
+    });
+
   }
 
   void onFemaleChange(int value) {
-    femaleCount = value;
+    setState(() {
+      femaleCount = value;
+    });
   }
 
   List<DropdownMenuItem<int>> getItem() {
@@ -454,8 +450,10 @@ class TableBookingState extends State<TableBooking> {
     resrevationData["user_mobile"] = numberController.text;
     resrevationData["males"] = maleCount.toString();
     resrevationData["females"] = femaleCount.toString();
-    resrevationData["members"] = dropDownValue.toString();
-    resrevationData["date_time"] = formatDateTime();
+    resrevationData["members"] = (maleCount+femaleCount).toString();
+//    resrevationData["date_time"] = formatDateTime();
+    resrevationData["date"] = formatDate();
+    resrevationData["time"] = formatTime();
     resrevationData["status"] = 0.toString();
     return resrevationData;
   }
@@ -468,6 +466,22 @@ class TableBookingState extends State<TableBooking> {
         currentDate.year.toString() +
         " " +
         currentTime.hour.toString() +
+        ":" +
+        currentTime.minute.toString();
+  }
+
+
+  String formatDate() {
+    return currentDate.day.toString() +
+        "-" +
+        currentDate.month.toString() +
+        "-" +
+        currentDate.year.toString();
+  }
+
+
+  String formatTime() {
+    return currentTime.hour.toString() +
         ":" +
         currentTime.minute.toString();
   }

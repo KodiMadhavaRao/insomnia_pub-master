@@ -104,15 +104,15 @@ class OffersWidgetsState extends State<OffersWidgets> {
                         fontWeight: FontWeight.w400),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 25),
-                  child: Text(
-                    offerList.message[index].specialOffersText,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-                  ),
-                )
+//                Padding(
+//                  padding: const EdgeInsets.only(right: 25),
+//                  child: Text(
+//                    offerList.message[index].specialOffersText,
+//                    maxLines: 2,
+//                    overflow: TextOverflow.ellipsis,
+//                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+//                  ),
+//                )
               ],
             ),
           );

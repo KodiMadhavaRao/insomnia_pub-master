@@ -3,8 +3,8 @@ import 'package:insomnia_pub/ui/event_list/events_list.dart';
 import 'package:insomnia_pub/ui/feedback/feedback_widget.dart';
 import 'package:insomnia_pub/ui/offers/offers.dart';
 import 'package:insomnia_pub/util/constants.dart';
-import 'package:insomnia_pub/util/progress_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import 'home/home_screen.dart';
 import 'packages/packages.dart';
 import 'photo_gallery/photo_gallery.dart';

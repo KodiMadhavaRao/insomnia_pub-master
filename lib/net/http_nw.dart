@@ -30,8 +30,8 @@ class AppHttpRequest {
     int statusCode = response.statusCode;
     Map<String, String> headers = response.headers;
     String contentType = headers['content-type'];
-    String json = response.body;
-    return json;
+    final jsonResponse = jsonDecode(response.body);
+    return jsonResponse;
   }
 
   static getPackagesResponse() async {
