@@ -52,8 +52,8 @@ class _MyAppState extends State<MyApp> {
       height: double.infinity,
       width: double.infinity,
       decoration: BoxDecoration(
-          image:
-              DecorationImage(image: AssetImage('images/splash_screen.jpg'), fit: BoxFit.fitWidth)),
+
+          image:DecorationImage(image: AssetImage('images/splash_screen.jpg'), fit: BoxFit.fitWidth)),
     );
   }
 
