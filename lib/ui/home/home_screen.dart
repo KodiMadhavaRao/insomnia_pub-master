@@ -30,6 +30,8 @@ class MyHomePage extends StatefulWidget {
 class HomeScreenState extends State<MyHomePage> {
   int page;
   DateTime currentBackPressTime;
+  Future<void> _initializeVideoPlayerFuture;
+
   final List<String> assetList = [
     "images/event_banner.jpg",
     "images/event_banner.jpg",
@@ -461,6 +463,12 @@ class HomeScreenState extends State<MyHomePage> {
     );
   }
 
+  Widget getVideo()
+  {
+
+
+
+  }
   Widget getFeedBackTitleView(String value) {
     return Padding(
       padding: const EdgeInsets.only(top: 75, bottom: 15),

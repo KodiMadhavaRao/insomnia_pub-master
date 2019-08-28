@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:insomnia_pub/dtos/package_list_dto.dart';
@@ -31,13 +33,11 @@ class PackagesState extends State<Packages> {
     AppHttpRequest.getPackagesResponse().then((response) {
       setState(() {
         loadingStatus = false;
-        if (response['status'] == Constants.success) {
           try {
             packageListDTO = PackageListDTO.fromJson(response);
           } catch (e) {
             print("EXCEPTION : " + e);
           }
-        }
       });
     });
   }

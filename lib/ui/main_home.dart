@@ -68,76 +68,11 @@ class MainHomeState extends State<MainHome> {
       onTap: () {
         launchMap();
       },
-      child: Stack(
-        children: <Widget>[
-          Image.asset(
-            "images/location.PNG",
-            height: mapHeight,
-            width: double.infinity,
-            fit: BoxFit.cover,
-          ),
-          Container(
-            height: mapHeight,
-            decoration: BoxDecoration(
-//              color: Colors.grey.withAlpha(150),
-                /*gradient: LinearGradient(
-                    begin: FractionalOffset.topCenter,
-                    end: FractionalOffset.bottomCenter,
-                    colors: [
-                      Colors.grey.withOpacity(0.0),
-                      Colors.grey.withOpacity(1.0),
-                    ],
-                    stops: [
-                      0.0,
-                      1.0
-                    ])*/
-                ),
-          ),
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0, right: 8.0),
-                    child: Card(
-                      shape: CircleBorder(),
-                      child: Icon(
-                        Icons.arrow_forward,
-                        size: 30,
-                        color: Colors.yellow,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: Card(
-                      shape: CircleBorder(),
-                      child: Icon(
-                        Icons.arrow_forward,
-                        size: 30,
-                        color: Colors.yellow,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    "Find Me",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-//                      shadows: [
-//                        Shadow(color: Colors.black, blurRadius: 5),
-//                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
+      child: Image.asset(
+        "images/map.jpg",
+        height: mapHeight,
+        width: double.infinity,
+        fit: BoxFit.cover,
       ),
     );
   }
@@ -148,13 +83,9 @@ class MainHomeState extends State<MainHome> {
         shrinkWrap: true,
         itemCount: 6,
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: 1,
-            crossAxisCount: 2,
-            crossAxisSpacing: 25,
-            mainAxisSpacing: 25),
+            childAspectRatio: 1, crossAxisCount: 2, crossAxisSpacing: 25, mainAxisSpacing: 25),
         itemBuilder: (BuildContext context, int index) {
-          return getMainOptionsView(
-              alIcons[index], description[index], ids[index]);
+          return getMainOptionsView(alIcons[index], description[index], ids[index]);
         });
     return gridView;
   }

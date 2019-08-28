@@ -32,6 +32,8 @@ dependencies:
   cached_network_image: ^1.1.1
   fluttertoast: ^3.1.0
   shared_preferences: ^0.5.3+4
+#  video_player: ^0.10.1
+
 
 dev_dependencies:
   flutter_test:
@@ -85,6 +87,7 @@ flutter:
     - images/home_sl_2.jpg
     - images/home_sl_3.jpg
     - images/home_sl_4.jpg
+    - images/map.jpg
   #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

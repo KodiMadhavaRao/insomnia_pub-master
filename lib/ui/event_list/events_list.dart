@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:insomnia_pub/dtos/event_list_dto.dart';
 import 'package:insomnia_pub/net/http_nw.dart';
 import 'package:insomnia_pub/util/progress_indicator.dart';
-
+import 'package:insomnia_pub/util/custom_dialog.dart' as customDialog;
 class EventsList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -53,8 +53,8 @@ class EventsListState extends State<EventsList> {
             onTap: () {
               showDialog(
                   context: context,
-                  builder: (_) => new AlertDialog(
-                        content: CachedNetworkImage(
+                  builder: (_) => new customDialog.Dialog(
+                        child: CachedNetworkImage(
                           imageUrl: eventL1istDTO.message[index].image,
                           placeholder: (context, url) => Container(
                             child: new CircularProgressIndicator(

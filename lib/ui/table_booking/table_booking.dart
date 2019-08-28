@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:insomnia_pub/net/http_nw.dart';
+import 'package:insomnia_pub/ui/home/home_screen.dart';
+import 'package:insomnia_pub/util/Utils.dart';
 import 'package:insomnia_pub/util/constants.dart';
 import 'package:insomnia_pub/util/number_counter.dart';
 import 'package:insomnia_pub/util/progress_indicator.dart';
@@ -32,6 +34,7 @@ class TableBookingState extends State<TableBooking> {
   TimeOfDay currentTime;
 
   int iUserid,iMobileNo;
+  String sUserName;
   @override
   void initState() {
     super.initState();
@@ -44,6 +47,9 @@ class TableBookingState extends State<TableBooking> {
     });
     SharedPrefencesHelper.getMobileNo().then((int mobileNo){
       numberController.text=mobileNo.toString();
+    });
+    SharedPrefencesHelper.getUserName().then((String userName){
+      nameController.text=userName.toString();
     });
   }
 
@@ -180,10 +186,21 @@ class TableBookingState extends State<TableBooking> {
                   ),
                 ),
                 Container(
-                width: double.infinity,
+                  width: double.infinity,
                   height: 35,
                   color: Colors.white,
-                  child: Align(child: Container(child: Text(iTotalCount.toString()+" Persons",style: TextStyle(color: Colors.black,fontSize: 18),),),),
+                  child: Align(alignment: Alignment.center,child: Text(iTotalCount.toString()+" Persons",style: TextStyle(color: Colors.black,fontSize: 16),))/*DropdownButtonHideUnderline(
+                    child: Theme(
+                      data: ThemeData.light(),
+                      child: DropdownButton(
+                        value: dropDownValue,
+                        isExpanded: true,
+                        items: getItem(),
+                        onChanged: onDropDownChange,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  )*/,
                 ),
               ],
             ),
@@ -218,7 +235,6 @@ class TableBookingState extends State<TableBooking> {
     setState(() {
       maleCount = value;
     });
-
   }
 
   void onFemaleChange(int value) {
@@ -287,14 +303,62 @@ class TableBookingState extends State<TableBooking> {
           color: Constants.COLORMAIN,
           child: Text("Reserve Table"),
           onPressed: () {
-            setState(() {
-              loadingStatus = true;
-            });
-            AppHttpRequest.saveTableReservation(formMapData()).then((String body) {
-              handleTableBookingSaveResponse(body);
-            });
+
+            onSubmitRatting();
+
           },
         ));
+  }
+
+  void onSubmitRatting() async {
+
+    if(nameController.text.isEmpty)
+      {
+        Utils.showToast("Please enter Name", Colors.redAccent, Colors.white);
+        return;
+      }
+    else if(numberController.text.isEmpty)
+    {
+      Utils.showToast("Please enter mobile number", Colors.redAccent, Colors.white);
+      return;
+    }
+    else if(iTotalCount == 0)
+    {
+      Utils.showToast("Please add memebers", Colors.redAccent, Colors.white);
+      return;
+    }
+    else
+      {
+        setState(() {
+          loadingStatus = true;
+        });
+        AppHttpRequest.saveTableReservation(formMapData()).then((String body) {
+          handleTableBookingSaveResponse(body);
+        });
+
+
+      }
+
+
+
+
+  /*  int iuserid=  await SharedPrefencesHelper.getUserId();
+    AppHttpRequest.submitFeedBack(iuserid, foodRatting, serviceRatting,
+                                      settingRatting, overAllRatting, reviewText.text)
+        .then((response) {
+      setState(() {
+//        if(response is Map)
+        loadingStatus = false;
+        reviewText.text = "";
+        foodRatting = 0;
+        serviceRatting = 0;
+        settingRatting = 0;
+        overAllRatting = 0;
+      });
+      Utils.showToast("Thank's for valuble feedback");
+    });
+*/
+
   }
 
   Widget getDateTimePicker() {
@@ -417,7 +481,7 @@ class TableBookingState extends State<TableBooking> {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    "TABLE BOOKING",
+                    widget.showCloseButton?"PACKAGE BOOKING":"TABLE BOOKING",
                     style: TextStyle(color: Constants.COLORMAIN, fontSize: 18),
                   ),
                 ),
@@ -491,7 +555,8 @@ class TableBookingState extends State<TableBooking> {
       loadingStatus = false;
     });
     Map<String, dynamic> jsonData = json.decode(body);
-    if (jsonData["status"] == "success") {
+    if (jsonData["status"] == "success")
+    {
       Fluttertoast.showToast(
           msg: jsonData["message"],
           toastLength: Toast.LENGTH_SHORT,
@@ -500,7 +565,10 @@ class TableBookingState extends State<TableBooking> {
           backgroundColor: Constants.COLORMAIN,
           textColor: Colors.white,
           fontSize: 16.0);
-    } else {
+      Navigator.push(context, new MaterialPageRoute(builder:(context) => new MyHomePage()));
+    }
+    else
+      {
       Fluttertoast.showToast(
           msg: jsonData["message"],
           toastLength: Toast.LENGTH_SHORT,

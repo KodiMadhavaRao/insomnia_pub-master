@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:insomnia_pub/dtos/gallery_list_dto.dart';
 import 'package:insomnia_pub/net/http_nw.dart';
 import 'package:insomnia_pub/util/progress_indicator.dart';
+import 'package:insomnia_pub/util/custom_dialog.dart' as customDialog;
 
 class PhotoGallery extends StatefulWidget {
   @override
@@ -55,24 +56,23 @@ class PhotoGalleryState extends State<PhotoGallery> {
                 onTap: () {
                   showDialog(
                       context: context,
-                      builder: (_) => new AlertDialog(
-                            content: CachedNetworkImage(
-//                              height: double.maxFinite,
-//                              width: double.maxFinite,
-                              imageUrl: galleryListDTO.message[index].image,
-                              placeholder: (context, url) => Container(
-                                child: new CircularProgressIndicator(
-                                    valueColor:
-                                        new AlwaysStoppedAnimation(Colors.blue),
-                                    strokeWidth: 5.0),
-                                height: 30,
-                                width: 30,
-                                alignment: Alignment.center,
+                      builder: (_) => new customDialog.Dialog(
+                              child: CachedNetworkImage(
+                                imageUrl: galleryListDTO.message[index].image,
+                                placeholder: (context, url) => Container(
+                                  child: new CircularProgressIndicator(
+                                      valueColor:
+                                          new AlwaysStoppedAnimation(Colors.blue),
+                                      strokeWidth: 5.0),
+                                  height: 30,
+                                  width: 30,
+                                  alignment: Alignment.center,
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    new Icon(Icons.error),
                               ),
-                              errorWidget: (context, url, error) =>
-                                  new Icon(Icons.error),
                             ),
-                          ));
+                          );
                 },
                 child: CachedNetworkImage(
                   imageUrl: galleryListDTO.message[index].image,
