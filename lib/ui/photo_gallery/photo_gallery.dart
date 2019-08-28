@@ -46,40 +46,118 @@ class PhotoGalleryState extends State<PhotoGallery> {
         shrinkWrap: true,
         itemCount: galleryListDTO.message.length,
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 5,
-            crossAxisSpacing: 5,
-            childAspectRatio: 3 / 4),
+            crossAxisCount: 3, mainAxisSpacing: 5, crossAxisSpacing: 5, childAspectRatio: 3 / 4),
         itemBuilder: (BuildContext context, int index) {
           return GridTile(
             child: InkWell(
                 onTap: () {
                   showDialog(
-                      context: context,
-                      builder: (_) => new customDialog.Dialog(
-                              child: CachedNetworkImage(
-                                imageUrl: galleryListDTO.message[index].image,
-                                placeholder: (context, url) => Container(
-                                  child: new CircularProgressIndicator(
-                                      valueColor:
-                                          new AlwaysStoppedAnimation(Colors.blue),
-                                      strokeWidth: 5.0),
-                                  height: 30,
-                                  width: 30,
-                                  alignment: Alignment.center,
+                    context: context,
+                    builder: (context) {
+                      int dialogImage = index;
+                      return StatefulBuilder(
+                        builder: (context, setState) {
+                          return new customDialog.Dialog(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                CachedNetworkImage(
+                                  imageUrl: galleryListDTO
+                                      .message[dialogImage == null ? index : dialogImage].image,
+                                  placeholder: (context, url) => Container(
+                                    child: new CircularProgressIndicator(
+                                        valueColor: new AlwaysStoppedAnimation(Colors.blue),
+                                        strokeWidth: 5.0),
+                                    height: 30,
+                                    width: 30,
+                                    alignment: Alignment.center,
+                                  ),
+                                  errorWidget: (context, url, error) => new Icon(Icons.error),
                                 ),
-                                errorWidget: (context, url, error) =>
-                                    new Icon(Icons.error),
-                              ),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      FlatButton(
+                                          child: Text('Previous'),
+                                          onPressed: () {
+                                            setState(() {
+                                              dialogImage = dialogImage == null || dialogImage == 0
+                                                  ? dialogImage
+                                                  : dialogImage - 1;
+                                            });
+                                          }),
+                                      FlatButton(
+                                          child: Text('Next'),
+                                          onPressed: () {
+                                            setState(() {
+                                              dialogImage = dialogImage == null
+                                                  ? 1
+                                                  : dialogImage == galleryListDTO.message.length - 1
+                                                      ? dialogImage
+                                                      : dialogImage + 1;
+                                            });
+                                          })
+                                    ])
+                              ],
                             ),
                           );
+                        },
+                      );
+                    },
+                  );
+
+/*                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      int dialogImage;
+                      return new customDialog.Dialog(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            CachedNetworkImage(
+                              imageUrl: galleryListDTO
+                                  .message[dialogImage == null ? index : dialogImage].image,
+                              placeholder: (context, url) => Container(
+                                child: new CircularProgressIndicator(
+                                    valueColor: new AlwaysStoppedAnimation(Colors.blue),
+                                    strokeWidth: 5.0),
+                                height: 30,
+                                width: 30,
+                                alignment: Alignment.center,
+                              ),
+                              errorWidget: (context, url, error) => new Icon(Icons.error),
+                            ),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  index == 0
+                                      ? Container()
+                                      : FlatButton(
+                                          child: Text('Previous'),
+                                          onPressed: () {
+                                            setState(() {});
+                                          }),
+                                  index == galleryListDTO.message.length - 1
+                                      ? Container()
+                                      : FlatButton(
+                                          child: Text('Next'),
+                                          onPressed: () {
+                                            setState(() {
+                                              dialogImage=dialogImage==null?1:dialogImage+1;
+                                            });
+                                          })
+                                ])
+                          ],
+                        ),
+                      );
+                    },
+                  );*/
                 },
                 child: CachedNetworkImage(
                   imageUrl: galleryListDTO.message[index].image,
                   placeholder: (context, url) => Container(
                     child: new CircularProgressIndicator(
-                        valueColor: new AlwaysStoppedAnimation(Colors.blue),
-                        strokeWidth: 5.0),
+                        valueColor: new AlwaysStoppedAnimation(Colors.blue), strokeWidth: 5.0),
                     height: 30,
                     width: 30,
                     alignment: Alignment.center,

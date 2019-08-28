@@ -170,7 +170,7 @@ class TableBookingState extends State<TableBooking> {
                   ),
                 ],
               ),
-              flex: 6),
+              flex: 8),
           Padding(
             padding: EdgeInsets.only(right: 5),
           ),
@@ -182,7 +182,7 @@ class TableBookingState extends State<TableBooking> {
                   padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
                   child: Text(
                     "NO OF GUESTS GOING",
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 10),
                   ),
                 ),
                 Container(

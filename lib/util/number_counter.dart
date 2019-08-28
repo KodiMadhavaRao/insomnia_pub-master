@@ -29,7 +29,7 @@ class _NumberCountState extends State<NumberCount> {
           InkWell(
             onTap: ()=>onDecrementValue(),
             child: Card(
-              child: Icon(Icons.remove, size: 16, color: Colors.white),
+              child: Icon(Icons.remove, size: 20, color: Colors.white),
               shape: CircleBorder(),
             ),
           ),
@@ -40,7 +40,7 @@ class _NumberCountState extends State<NumberCount> {
           InkWell(
             onTap: ()=>onIncrementValue(),
             child: Card(
-              child: Icon(Icons.add, size: 16, color: Colors.white),
+              child: Icon(Icons.add, size: 20, color: Colors.white),
               shape: CircleBorder(),
             ),
           )

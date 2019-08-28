@@ -63,16 +63,15 @@ class MainHomeState extends State<MainHome> {
   }
 
   Widget getFindMeView() {
-    double mapHeight = MediaQuery.of(context).size.width * 0.13;
     return InkWell(
       onTap: () {
         launchMap();
       },
       child: Image.asset(
         "images/map.jpg",
-        height: mapHeight,
+        height: 40,
         width: double.infinity,
-        fit: BoxFit.cover,
+        fit: BoxFit.fill,
       ),
     );
   }
