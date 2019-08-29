@@ -36,7 +36,7 @@ class HomeScreenState extends State<MyHomePage> {
     "images/event_banner.jpg",
     "images/event_banner.jpg",
     "images/offer_banner.jpg",
-    "images/reservationtable_banner.jpg",
+    "images/reservationtable_banner_booking.jpg",
     "images/gallery_banner.jpg",
     "images/reservationtable_banner.jpg",
     "images/about_banner.png",

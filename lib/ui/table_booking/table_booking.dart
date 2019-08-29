@@ -28,13 +28,14 @@ class TableBookingState extends State<TableBooking> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController numberController = new TextEditingController();
   int dropDownValue;
-  int maleCount=0, femaleCount=0;
-  int iTotalCount=0;
+  int maleCount = 0, femaleCount = 0;
+  int iTotalCount = 0;
   DateTime currentDate;
   TimeOfDay currentTime;
 
-  int iUserid,iMobileNo;
+  int iUserid, iMobileNo;
   String sUserName;
+
   @override
   void initState() {
     super.initState();
@@ -42,14 +43,14 @@ class TableBookingState extends State<TableBooking> {
     currentTime = TimeOfDay.now();
     widget.showCloseButton = widget.showCloseButton == null ? false : widget.showCloseButton;
     dropDownValue = 1;
-    SharedPrefencesHelper.getUserId().then((int userId){
-      iUserid=userId;
+    SharedPrefencesHelper.getUserId().then((int userId) {
+      iUserid = userId;
     });
-    SharedPrefencesHelper.getMobileNo().then((int mobileNo){
-      numberController.text=mobileNo.toString();
+    SharedPrefencesHelper.getMobileNo().then((int mobileNo) {
+      numberController.text = mobileNo.toString();
     });
-    SharedPrefencesHelper.getUserName().then((String userName){
-      nameController.text=userName.toString();
+    SharedPrefencesHelper.getUserName().then((String userName) {
+      nameController.text = userName.toString();
     });
   }
 
@@ -65,20 +66,21 @@ class TableBookingState extends State<TableBooking> {
 
   Column createForm() {
     return Column(
-      mainAxisSize: widget.showCloseButton?MainAxisSize.min:MainAxisSize.max,
+      mainAxisSize: widget.showCloseButton ? MainAxisSize.min : MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         showCloseButton(),
         getLabelvalueView(
-            "YOUR NAME",
-            Icon(
-              Icons.account_circle,
-              color: Colors.black,
-            ),
-            "Your Name",
-            TextInputType.text,
-            nameController,),
-        getLabelvalueView(
+          "YOUR NAME",
+          Icon(
+            Icons.account_circle,
+            color: Colors.black,
+          ),
+          "Your Name",
+          TextInputType.text,
+          nameController,
+        ),
+        /*getLabelvalueView(
             "EMAIL ADDRESS",
             Icon(
               Icons.email,
@@ -86,12 +88,13 @@ class TableBookingState extends State<TableBooking> {
             ),
             "Email Address",
             TextInputType.emailAddress,
-            emailController),
+            emailController),*/
         getLabelvalueView("MOBILE", Icon(Icons.phone_android, color: Colors.black), "Mobile",
             TextInputType.number, numberController),
         getGuestsView(),
         getDateTimePicker(),
         Padding(padding: EdgeInsets.all(5)),
+        agreementView(),
         getReservationButton()
       ],
     );
@@ -135,7 +138,7 @@ class TableBookingState extends State<TableBooking> {
   }
 
   Widget getGuestsView() {
-    iTotalCount=maleCount+femaleCount;
+    iTotalCount = maleCount + femaleCount;
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Row(
@@ -189,7 +192,23 @@ class TableBookingState extends State<TableBooking> {
                   width: double.infinity,
                   height: 35,
                   color: Colors.white,
-                  child: Align(alignment: Alignment.center,child: Text(iTotalCount.toString()+" Persons",style: TextStyle(color: Colors.black,fontSize: 16),))/*DropdownButtonHideUnderline(
+                  child: Align(
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0, right: 4.0),
+                            child: Icon(
+                              Icons.people,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Text(
+                            iTotalCount.toString() + " Persons",
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                        ],
+                      )) /*DropdownButtonHideUnderline(
                     child: Theme(
                       data: ThemeData.light(),
                       child: DropdownButton(
@@ -200,7 +219,8 @@ class TableBookingState extends State<TableBooking> {
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
-                  )*/,
+                  )*/
+                  ,
                 ),
               ],
             ),
@@ -303,46 +323,31 @@ class TableBookingState extends State<TableBooking> {
           color: Constants.COLORMAIN,
           child: Text("Reserve Table"),
           onPressed: () {
-
             onSubmitRatting();
-
           },
         ));
   }
 
   void onSubmitRatting() async {
-
-    if(nameController.text.isEmpty)
-      {
-        Utils.showToast("Please enter Name", Colors.redAccent, Colors.white);
-        return;
-      }
-    else if(numberController.text.isEmpty)
-    {
+    if (nameController.text.isEmpty) {
+      Utils.showToast("Please enter Name", Colors.redAccent, Colors.white);
+      return;
+    } else if (numberController.text.isEmpty) {
       Utils.showToast("Please enter mobile number", Colors.redAccent, Colors.white);
       return;
-    }
-    else if(iTotalCount == 0)
-    {
+    } else if (iTotalCount == 0) {
       Utils.showToast("Please add memebers", Colors.redAccent, Colors.white);
       return;
+    } else {
+      setState(() {
+        loadingStatus = true;
+      });
+      AppHttpRequest.saveTableReservation(formMapData()).then((String body) {
+        handleTableBookingSaveResponse(body);
+      });
     }
-    else
-      {
-        setState(() {
-          loadingStatus = true;
-        });
-        AppHttpRequest.saveTableReservation(formMapData()).then((String body) {
-          handleTableBookingSaveResponse(body);
-        });
 
-
-      }
-
-
-
-
-  /*  int iuserid=  await SharedPrefencesHelper.getUserId();
+    /*  int iuserid=  await SharedPrefencesHelper.getUserId();
     AppHttpRequest.submitFeedBack(iuserid, foodRatting, serviceRatting,
                                       settingRatting, overAllRatting, reviewText.text)
         .then((response) {
@@ -358,7 +363,6 @@ class TableBookingState extends State<TableBooking> {
       Utils.showToast("Thank's for valuble feedback");
     });
 */
-
   }
 
   Widget getDateTimePicker() {
@@ -481,7 +485,7 @@ class TableBookingState extends State<TableBooking> {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    widget.showCloseButton?"PACKAGE BOOKING":"TABLE BOOKING",
+                    widget.showCloseButton ? "PACKAGE BOOKING" : "TABLE BOOKING",
                     style: TextStyle(color: Constants.COLORMAIN, fontSize: 18),
                   ),
                 ),
@@ -514,7 +518,7 @@ class TableBookingState extends State<TableBooking> {
     resrevationData["user_mobile"] = numberController.text;
     resrevationData["males"] = maleCount.toString();
     resrevationData["females"] = femaleCount.toString();
-    resrevationData["members"] = (maleCount+femaleCount).toString();
+    resrevationData["members"] = (maleCount + femaleCount).toString();
 //    resrevationData["date_time"] = formatDateTime();
     resrevationData["date"] = formatDate();
     resrevationData["time"] = formatTime();
@@ -534,7 +538,6 @@ class TableBookingState extends State<TableBooking> {
         currentTime.minute.toString();
   }
 
-
   String formatDate() {
     return currentDate.day.toString() +
         "-" +
@@ -543,11 +546,8 @@ class TableBookingState extends State<TableBooking> {
         currentDate.year.toString();
   }
 
-
   String formatTime() {
-    return currentTime.hour.toString() +
-        ":" +
-        currentTime.minute.toString();
+    return currentTime.hour.toString() + ":" + currentTime.minute.toString();
   }
 
   void handleTableBookingSaveResponse(String body) {
@@ -555,8 +555,7 @@ class TableBookingState extends State<TableBooking> {
       loadingStatus = false;
     });
     Map<String, dynamic> jsonData = json.decode(body);
-    if (jsonData["status"] == "success")
-    {
+    if (jsonData["status"] == "success") {
       Fluttertoast.showToast(
           msg: jsonData["message"],
           toastLength: Toast.LENGTH_SHORT,
@@ -565,10 +564,8 @@ class TableBookingState extends State<TableBooking> {
           backgroundColor: Constants.COLORMAIN,
           textColor: Colors.white,
           fontSize: 16.0);
-      Navigator.push(context, new MaterialPageRoute(builder:(context) => new MyHomePage()));
-    }
-    else
-      {
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => new MyHomePage()));
+    } else {
       Fluttertoast.showToast(
           msg: jsonData["message"],
           toastLength: Toast.LENGTH_SHORT,
@@ -580,4 +577,23 @@ class TableBookingState extends State<TableBooking> {
     }
   }
 
+  Widget agreementView() {
+    return Row(
+      children: <Widget>[
+        Checkbox(
+          value: true,
+          activeColor: Constants.COLORMAIN,
+          onChanged: (bool value) {},
+        ),
+        Text(
+          "I agree to the",
+          style: TextStyle(fontSize: 16, color: Constants.COLORMAIN),
+        ),
+        Text(
+          " terms and conditions",
+          style: TextStyle(fontSize: 16, color: Color(0xff005db9)),
+        )
+      ],
+    );
+  }
 }

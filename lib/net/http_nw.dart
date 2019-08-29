@@ -43,6 +43,15 @@ class AppHttpRequest {
     final jsonResponse = json.decode(response.body);
     return jsonResponse;
   }
+  static getslidersResponse() async {
+    Response response =
+    await get('http://geekadvises.com/insomnia/slider');
+    int statusCode = response.statusCode;
+    Map<String, String> headers = response.headers;
+    String contentType = headers['content-type'];
+    final jsonResponse = json.decode(response.body);
+    return jsonResponse;
+  }
 
   static submitFeedBack(int user_id, int food, int service, int setting,
       int overall, String review) async {
