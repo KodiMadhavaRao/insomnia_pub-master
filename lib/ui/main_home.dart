@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:insomnia_pub/ui/event_list/events_list.dart';
-import 'package:insomnia_pub/ui/feedback/feedback_widget.dart';
-import 'package:insomnia_pub/ui/offers/offers.dart';
-import 'package:insomnia_pub/util/constants.dart';
+import 'package:Amnesia/ui/event_list/events_list.dart';
+import 'package:Amnesia/ui/feedback/feedback_widget.dart';
+import 'package:Amnesia/ui/offers/offers.dart';
+import 'package:Amnesia/util/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'home/home_screen.dart';
@@ -82,9 +82,13 @@ class MainHomeState extends State<MainHome> {
         shrinkWrap: true,
         itemCount: 6,
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: 1, crossAxisCount: 2, crossAxisSpacing: 25, mainAxisSpacing: 25),
+            childAspectRatio: 1,
+            crossAxisCount: 2,
+            crossAxisSpacing: 25,
+            mainAxisSpacing: 25),
         itemBuilder: (BuildContext context, int index) {
-          return getMainOptionsView(alIcons[index], description[index], ids[index]);
+          return getMainOptionsView(
+              alIcons[index], description[index], ids[index]);
         });
     return gridView;
   }

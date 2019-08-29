@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:insomnia_pub/ui/event_list/events_list.dart';
-import 'package:insomnia_pub/ui/feedback/feedback_widget.dart';
-import 'package:insomnia_pub/ui/home/carousel_with_indicator.dart';
-import 'package:insomnia_pub/ui/main_home.dart';
-import 'package:insomnia_pub/ui/offers/offers.dart';
-import 'package:insomnia_pub/ui/packages/packages.dart';
-import 'package:insomnia_pub/ui/photo_gallery/photo_gallery.dart';
-import 'package:insomnia_pub/ui/table_booking/table_booking.dart';
-import 'package:insomnia_pub/util/Utils.dart';
-import 'package:insomnia_pub/util/constants.dart';
+import 'package:Amnesia/ui/event_list/events_list.dart';
+import 'package:Amnesia/ui/feedback/feedback_widget.dart';
+import 'package:Amnesia/ui/home/carousel_with_indicator.dart';
+import 'package:Amnesia/ui/main_home.dart';
+import 'package:Amnesia/ui/offers/offers.dart';
+import 'package:Amnesia/ui/packages/packages.dart';
+import 'package:Amnesia/ui/photo_gallery/photo_gallery.dart';
+import 'package:Amnesia/ui/table_booking/table_booking.dart';
+import 'package:Amnesia/util/Utils.dart';
+import 'package:Amnesia/util/constants.dart';
 
 class MyHomePage extends StatefulWidget {
   final String title;
@@ -463,12 +463,7 @@ class HomeScreenState extends State<MyHomePage> {
     );
   }
 
-  Widget getVideo()
-  {
-
-
-
-  }
+  Widget getVideo() {}
   Widget getFeedBackTitleView(String value) {
     return Padding(
       padding: const EdgeInsets.only(top: 75, bottom: 15),

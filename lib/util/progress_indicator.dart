@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:insomnia_pub/util/constants.dart';
+import 'package:Amnesia/util/constants.dart';
 
 class ProgressWidget extends StatelessWidget {
   final Widget child;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:insomnia_pub/net/http_nw.dart';
-import 'package:insomnia_pub/util/Utils.dart';
-import 'package:insomnia_pub/util/constants.dart';
-import 'package:insomnia_pub/util/feedback_bar.dart';
-import 'package:insomnia_pub/util/progress_indicator.dart';
-import 'package:insomnia_pub/util/shared_preferences.dart';
+import 'package:Amnesia/net/http_nw.dart';
+import 'package:Amnesia/util/Utils.dart';
+import 'package:Amnesia/util/constants.dart';
+import 'package:Amnesia/util/feedback_bar.dart';
+import 'package:Amnesia/util/progress_indicator.dart';
+import 'package:Amnesia/util/shared_preferences.dart';
 
 class FeedBackWidget extends StatefulWidget {
   @override
@@ -39,22 +39,22 @@ class FeedBackWidgetState extends State<FeedBackWidget> {
               label: "Food",
               onRattingChange: foodRattingChange,
               selectedRatting: foodRatting,
-              ),
+            ),
             FeedBackBarWidget(
               label: "Service",
               onRattingChange: serviceRattingChange,
               selectedRatting: serviceRatting,
-              ),
+            ),
             FeedBackBarWidget(
               label: "Setting",
               onRattingChange: settingRattingChange,
               selectedRatting: settingRatting,
-              ),
+            ),
             FeedBackBarWidget(
               label: "Over all",
               onRattingChange: overAllRattingChange,
               selectedRatting: overAllRatting,
-              ),
+            ),
             getReviewTitle("Your Review"),
             Container(
               padding: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -73,15 +73,15 @@ class FeedBackWidgetState extends State<FeedBackWidget> {
                   hintText: "Type here",
                   hintStyle: TextStyle(color: Colors.grey[700]),
                   border: InputBorder.none,
-                  ),
                 ),
               ),
+            ),
             getSubmitButton(),
           ],
-          ),
         ),
+      ),
       isLoading: loadingStatus,
-      );
+    );
   }
 
   Widget getReviewTitle(String value) {
@@ -95,8 +95,8 @@ class FeedBackWidgetState extends State<FeedBackWidget> {
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: Constants.COLORMAIN),
-        ),
-      );
+      ),
+    );
   }
 
   void foodRattingChange(int value) {
@@ -131,13 +131,13 @@ class FeedBackWidgetState extends State<FeedBackWidget> {
               end: FractionalOffset.bottomCenter,
               stops: [0.0, 1.0],
               tileMode: TileMode.repeated),
-          ),
+        ),
         child: Text(
           "SUBMIT",
           style: TextStyle(color: Colors.black, fontSize: 24),
-          ),
         ),
-      );
+      ),
+    );
   }
 
   void onSubmitRatting() async {
@@ -150,16 +150,16 @@ class FeedBackWidgetState extends State<FeedBackWidget> {
       return;
     } else if (settingRatting == 0) {
       Utils.showToast("Please rate our Setting's and Arrangement",
-                          Colors.redAccent, Colors.white);
+          Colors.redAccent, Colors.white);
       return;
     } else if (overAllRatting == 0) {
       Utils.showToast(
           "Please rate our Over all", Colors.redAccent, Colors.white);
       return;
     }
-    int iuserid=  await SharedPrefencesHelper.getUserId();
+    int iuserid = await SharedPrefencesHelper.getUserId();
     AppHttpRequest.submitFeedBack(iuserid, foodRatting, serviceRatting,
-                                      settingRatting, overAllRatting, reviewText.text)
+            settingRatting, overAllRatting, reviewText.text)
         .then((response) {
       setState(() {
 //        if(response is Map)

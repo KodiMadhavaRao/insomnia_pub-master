@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:insomnia_pub/util/constants.dart';
+import 'package:Amnesia/util/constants.dart';
 
 class FeedBackBarWidget extends StatefulWidget {
   final String label;
@@ -40,7 +40,7 @@ class FeedBackBarWidgetState extends State<FeedBackBarWidget> {
             end: FractionalOffset.bottomCenter,
             stops: [0.0, 0.5],
             tileMode: TileMode.repeated),
-        ),
+      ),
       child: Row(
         children: <Widget>[
           Text(
@@ -49,31 +49,36 @@ class FeedBackBarWidgetState extends State<FeedBackBarWidget> {
                 color: Constants.COLORMAIN,
                 fontSize: 24,
                 fontWeight: FontWeight.w700),
-            ),
+          ),
           Spacer(),
           getRattingIcon(
               widget.selectedRatting == 1
-                  ? 'images/disapoint_d.png'
-                  : 'images/disapoint.png',
+                  ? 'images/ratting_1.png'
+                  : 'images/ratting_g_1.png',
               1),
           getRattingIcon(
               widget.selectedRatting == 2
-                  ? 'images/calm_d.png'
-                  : 'images/calm.png',
+                  ? 'images/ratting_2.png'
+                  : 'images/ratting_g_2.png',
               2),
           getRattingIcon(
               widget.selectedRatting == 3
-                  ? 'images/smile_d.png'
-                  : 'images/smile.png',
+                  ? 'images/ratting_3.png'
+                  : 'images/ratting_g_3.png',
               3),
           getRattingIcon(
               widget.selectedRatting == 4
-                  ? 'images/smile_d.png'
-                  : 'images/smile.png',
+                  ? 'images/ratting_4.png'
+                  : 'images/ratting_g_4.png',
               4),
+          getRattingIcon(
+              widget.selectedRatting == 5
+                  ? 'images/ratting_5.png'
+                  : 'images/ratting_g_5.png',
+              5),
         ],
-        ),
-      );
+      ),
+    );
   }
 
   Widget getRattingIcon(String assetPath, int rating) {
@@ -84,8 +89,8 @@ class FeedBackBarWidgetState extends State<FeedBackBarWidget> {
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, top: 10, bottom: 10),
         child: Image.asset(assetPath),
-        ),
-      );
+      ),
+    );
   }
 
   onRattingChanged(int rating) {

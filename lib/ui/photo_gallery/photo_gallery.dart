@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:insomnia_pub/dtos/gallery_list_dto.dart';
-import 'package:insomnia_pub/net/http_nw.dart';
-import 'package:insomnia_pub/util/progress_indicator.dart';
-import 'package:insomnia_pub/util/custom_dialog.dart' as customDialog;
+import 'package:Amnesia/dtos/gallery_list_dto.dart';
+import 'package:Amnesia/net/http_nw.dart';
+import 'package:Amnesia/util/progress_indicator.dart';
+import 'package:Amnesia/util/custom_dialog.dart' as customDialog;
 
 class PhotoGallery extends StatefulWidget {
   @override
@@ -46,7 +46,10 @@ class PhotoGalleryState extends State<PhotoGallery> {
         shrinkWrap: true,
         itemCount: galleryListDTO.message.length,
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, mainAxisSpacing: 5, crossAxisSpacing: 5, childAspectRatio: 3 / 4),
+            crossAxisCount: 3,
+            mainAxisSpacing: 5,
+            crossAxisSpacing: 5,
+            childAspectRatio: 3 / 4),
         itemBuilder: (BuildContext context, int index) {
           return GridTile(
             child: InkWell(
@@ -63,27 +66,35 @@ class PhotoGalleryState extends State<PhotoGallery> {
                               children: <Widget>[
                                 CachedNetworkImage(
                                   imageUrl: galleryListDTO
-                                      .message[dialogImage == null ? index : dialogImage].image,
+                                      .message[dialogImage == null
+                                          ? index
+                                          : dialogImage]
+                                      .image,
                                   placeholder: (context, url) => Container(
                                     child: new CircularProgressIndicator(
-                                        valueColor: new AlwaysStoppedAnimation(Colors.blue),
+                                        valueColor: new AlwaysStoppedAnimation(
+                                            Colors.blue),
                                         strokeWidth: 5.0),
                                     height: 30,
                                     width: 30,
                                     alignment: Alignment.center,
                                   ),
-                                  errorWidget: (context, url, error) => new Icon(Icons.error),
+                                  errorWidget: (context, url, error) =>
+                                      new Icon(Icons.error),
                                 ),
                                 Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       FlatButton(
                                           child: Text('Previous'),
                                           onPressed: () {
                                             setState(() {
-                                              dialogImage = dialogImage == null || dialogImage == 0
-                                                  ? dialogImage
-                                                  : dialogImage - 1;
+                                              dialogImage =
+                                                  dialogImage == null ||
+                                                          dialogImage == 0
+                                                      ? dialogImage
+                                                      : dialogImage - 1;
                                             });
                                           }),
                                       FlatButton(
@@ -92,7 +103,10 @@ class PhotoGalleryState extends State<PhotoGallery> {
                                             setState(() {
                                               dialogImage = dialogImage == null
                                                   ? 1
-                                                  : dialogImage == galleryListDTO.message.length - 1
+                                                  : dialogImage ==
+                                                          galleryListDTO.message
+                                                                  .length -
+                                                              1
                                                       ? dialogImage
                                                       : dialogImage + 1;
                                             });
@@ -157,7 +171,8 @@ class PhotoGalleryState extends State<PhotoGallery> {
                   imageUrl: galleryListDTO.message[index].image,
                   placeholder: (context, url) => Container(
                     child: new CircularProgressIndicator(
-                        valueColor: new AlwaysStoppedAnimation(Colors.blue), strokeWidth: 5.0),
+                        valueColor: new AlwaysStoppedAnimation(Colors.blue),
+                        strokeWidth: 5.0),
                     height: 30,
                     width: 30,
                     alignment: Alignment.center,

@@ -2,13 +2,13 @@ import 'dart:collection';
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
-import 'package:insomnia_pub/net/http_nw.dart';
-import 'package:insomnia_pub/ui/home/home_screen.dart';
-import 'package:insomnia_pub/util/Utils.dart';
-import 'package:insomnia_pub/util/constants.dart';
-import 'package:insomnia_pub/util/number_counter.dart';
-import 'package:insomnia_pub/util/progress_indicator.dart';
-import 'package:insomnia_pub/util/shared_preferences.dart';
+import 'package:Amnesia/net/http_nw.dart';
+import 'package:Amnesia/ui/home/home_screen.dart';
+import 'package:Amnesia/util/Utils.dart';
+import 'package:Amnesia/util/constants.dart';
+import 'package:Amnesia/util/number_counter.dart';
+import 'package:Amnesia/util/progress_indicator.dart';
+import 'package:Amnesia/util/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TableBooking extends StatefulWidget {
@@ -41,7 +41,8 @@ class TableBookingState extends State<TableBooking> {
     super.initState();
     currentDate = DateTime.now();
     currentTime = TimeOfDay.now();
-    widget.showCloseButton = widget.showCloseButton == null ? false : widget.showCloseButton;
+    widget.showCloseButton =
+        widget.showCloseButton == null ? false : widget.showCloseButton;
     dropDownValue = 1;
     SharedPrefencesHelper.getUserId().then((int userId) {
       iUserid = userId;
@@ -66,7 +67,8 @@ class TableBookingState extends State<TableBooking> {
 
   Column createForm() {
     return Column(
-      mainAxisSize: widget.showCloseButton ? MainAxisSize.min : MainAxisSize.max,
+      mainAxisSize:
+          widget.showCloseButton ? MainAxisSize.min : MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         showCloseButton(),
@@ -89,8 +91,12 @@ class TableBookingState extends State<TableBooking> {
             "Email Address",
             TextInputType.emailAddress,
             emailController),*/
-        getLabelvalueView("MOBILE", Icon(Icons.phone_android, color: Colors.black), "Mobile",
-            TextInputType.number, numberController),
+        getLabelvalueView(
+            "MOBILE",
+            Icon(Icons.phone_android, color: Colors.black),
+            "Mobile",
+            TextInputType.number,
+            numberController),
         getGuestsView(),
         getDateTimePicker(),
         Padding(padding: EdgeInsets.all(5)),
@@ -100,8 +106,8 @@ class TableBookingState extends State<TableBooking> {
     );
   }
 
-  Widget getLabelvalueView(String label, Icon icon, String hint, TextInputType textType,
-      TextEditingController textEditController) {
+  Widget getLabelvalueView(String label, Icon icon, String hint,
+      TextInputType textType, TextEditingController textEditController) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Column(children: <Widget>[
@@ -197,7 +203,8 @@ class TableBookingState extends State<TableBooking> {
                       child: Row(
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(left: 4.0, right: 4.0),
+                            padding:
+                                const EdgeInsets.only(left: 4.0, right: 4.0),
                             child: Icon(
                               Icons.people,
                               color: Colors.black,
@@ -333,7 +340,8 @@ class TableBookingState extends State<TableBooking> {
       Utils.showToast("Please enter Name", Colors.redAccent, Colors.white);
       return;
     } else if (numberController.text.isEmpty) {
-      Utils.showToast("Please enter mobile number", Colors.redAccent, Colors.white);
+      Utils.showToast(
+          "Please enter mobile number", Colors.redAccent, Colors.white);
       return;
     } else if (iTotalCount == 0) {
       Utils.showToast("Please add memebers", Colors.redAccent, Colors.white);
@@ -375,7 +383,8 @@ class TableBookingState extends State<TableBooking> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0, top: 5.0), child: Text("DATE")),
+                      padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
+                      child: Text("DATE")),
                   Container(
 //                width: double.infinity,
                     height: 35,
@@ -386,7 +395,8 @@ class TableBookingState extends State<TableBooking> {
                                 context: context,
                                 firstDate: currentDate,
                                 initialDate: currentDate,
-                                lastDate: DateTime(currentDate.year, currentDate.month + 2))
+                                lastDate: DateTime(
+                                    currentDate.year, currentDate.month + 2))
                             .then((date) {
                           if (date != null)
                             setState(() {
@@ -436,7 +446,8 @@ class TableBookingState extends State<TableBooking> {
                   color: Colors.white,
                   child: InkWell(
                     onTap: () {
-                      showTimePicker(initialTime: currentTime, context: context).then((time) {
+                      showTimePicker(initialTime: currentTime, context: context)
+                          .then((time) {
                         if (time != null)
                           setState(() {
                             currentTime = time;
@@ -485,7 +496,9 @@ class TableBookingState extends State<TableBooking> {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    widget.showCloseButton ? "PACKAGE BOOKING" : "TABLE BOOKING",
+                    widget.showCloseButton
+                        ? "PACKAGE BOOKING"
+                        : "TABLE BOOKING",
                     style: TextStyle(color: Constants.COLORMAIN, fontSize: 18),
                   ),
                 ),
@@ -564,7 +577,8 @@ class TableBookingState extends State<TableBooking> {
           backgroundColor: Constants.COLORMAIN,
           textColor: Colors.white,
           fontSize: 16.0);
-      Navigator.push(context, new MaterialPageRoute(builder: (context) => new MyHomePage()));
+      Navigator.push(context,
+          new MaterialPageRoute(builder: (context) => new MyHomePage()));
     } else {
       Fluttertoast.showToast(
           msg: jsonData["message"],

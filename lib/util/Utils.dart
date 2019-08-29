@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:insomnia_pub/util/constants.dart';
+import 'package:Amnesia/util/constants.dart';
 
 class Utils {
   static void showToast(String message,

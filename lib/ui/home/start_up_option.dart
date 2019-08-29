@@ -1,13 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:insomnia_pub/ui/SignUpScreen.dart';
-import 'package:insomnia_pub/util/constants.dart';
+import 'package:Amnesia/ui/SignUpScreen.dart';
+import 'package:Amnesia/util/constants.dart';
 
 import '../AuthenticationScreen.dart';
 
 class SignInOrSignUp extends StatelessWidget {
-  static final String path = "lib/src/pages/login/auth2.dart";
   final String backImg = "images/bg_1x.png";
 
   @override
@@ -37,13 +36,13 @@ class SignInOrSignUp extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Image.asset(
-                        "images/insomnialogo.png",
-                        width: 150,
+                        "images/app_logo.jpg",
+//                        width: 150,
                         height: 150,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.fitHeight,
                       ),
                       const SizedBox(height: 10.0),
-                    /*  Text(
+                      /*  Text(
                         "Night Club",
                         style: TextStyle(
                             color: Constants.COLORMAIN,

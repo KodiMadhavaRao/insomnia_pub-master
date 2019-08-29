@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:insomnia_pub/dtos/slider_data.dart';
-import 'package:insomnia_pub/net/http_nw.dart';
-import 'package:insomnia_pub/util/progress_indicator.dart';
+import 'package:Amnesia/dtos/slider_data.dart';
+import 'package:Amnesia/net/http_nw.dart';
+import 'package:Amnesia/util/progress_indicator.dart';
 
 List<String> imgList = new List();
 /*[
@@ -29,7 +29,8 @@ final List child = map<Widget>(
               imageUrl: imgList[index],
               placeholder: (context, url) => Container(
                 child: new CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation(Colors.blue), strokeWidth: 5.0),
+                    valueColor: new AlwaysStoppedAnimation(Colors.blue),
+                    strokeWidth: 5.0),
                 height: 30,
                 width: 30,
                 alignment: Alignment.center,
@@ -53,7 +54,10 @@ final List child = map<Widget>(
             children: <Widget>[
               Text(
                 "Welcome !",
-                style: TextStyle(color: Colors.yellow, fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.yellow,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold),
               ),
               Text(
                 "INSOMINIA-THE MOST HOT & HAPPENING \n PLACE IN HYDERABAD",
@@ -141,7 +145,8 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                     return Container(
                       width: 8.0,
                       height: 8.0,
-                      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                      margin:
+                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: _current == index

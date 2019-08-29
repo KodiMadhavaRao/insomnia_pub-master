@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:insomnia_pub/net/http_nw.dart';
-import 'package:insomnia_pub/ui/OTPScreen.dart';
-import 'package:insomnia_pub/util/Utils.dart';
-import 'package:insomnia_pub/util/constants.dart';
-import 'package:insomnia_pub/util/progress_indicator.dart';
-import 'package:insomnia_pub/util/shared_preferences.dart';
+import 'package:Amnesia/net/http_nw.dart';
+import 'package:Amnesia/ui/OTPScreen.dart';
+import 'package:Amnesia/util/Utils.dart';
+import 'package:Amnesia/util/constants.dart';
+import 'package:Amnesia/util/progress_indicator.dart';
+import 'package:Amnesia/util/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'SignUpScreen.dart';
 import 'home/home_screen.dart';
@@ -45,12 +45,9 @@ class _AutenticationState extends State<AuthenticationScreen> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(bottom: 50),
-                child: Text(
-                  "INSOMNIA",
-                  style: TextStyle(
-                      fontSize: 35,
-                      letterSpacing: 5,
-                      fontWeight: FontWeight.bold),
+                child: Image.asset(
+                  "images/app_logo.jpg",
+                  fit: BoxFit.fitHeight,
                 ),
               ),
               _buildTextFields(),

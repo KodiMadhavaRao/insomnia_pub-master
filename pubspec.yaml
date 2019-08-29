@@ -1,5 +1,5 @@
-name: insomnia_pub
-description: Insomnia
+name: Amnesia
+description: Amnesia
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -63,12 +63,12 @@ flutter:
     - images/offers_side_menu.png
     - images/package_side_menu.png
     - images/tablereservation_side_menu.png
-    - images/calm.png
-    - images/calm_d.png
-    - images/smile.png
-    - images/smile_d.png
-    - images/disapoint.png
-    - images/disapoint_d.png
+#    - images/calm.png
+#    - images/calm_d.png
+#    - images/smile.png
+#    - images/smile_d.png
+#    - images/disapoint.png
+#    - images/disapoint_d.png
     - images/location.PNG
     - images/Events_3.png
     - images/Special Offers_3.png
@@ -89,6 +89,18 @@ flutter:
     - images/home_sl_4.jpg
     - images/map.jpg
     - images/reservationtable_banner_booking.jpg
+    - images/ratting_g_1.png
+    - images/ratting_g_2.png
+    - images/ratting_g_3.png
+    - images/ratting_g_4.png
+    - images/ratting_g_5.png
+    - images/ratting_1.png
+    - images/ratting_2.png
+    - images/ratting_3.png
+    - images/ratting_4.png
+    - images/ratting_5.png
+    - images/app_logo.jpg
+
   #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:insomnia_pub/ui/AuthenticationScreen.dart';
-import 'package:insomnia_pub/ui/SignUpScreen.dart';
-import 'package:insomnia_pub/ui/home/home_screen.dart';
-import 'package:insomnia_pub/ui/home/start_up_option.dart';
-import 'package:insomnia_pub/util/constants.dart';
-import 'package:insomnia_pub/util/shared_preferences.dart';
+import 'package:Amnesia/ui/AuthenticationScreen.dart';
+import 'package:Amnesia/ui/SignUpScreen.dart';
+import 'package:Amnesia/ui/home/home_screen.dart';
+import 'package:Amnesia/ui/home/start_up_option.dart';
+import 'package:Amnesia/util/constants.dart';
+import 'package:Amnesia/util/shared_preferences.dart';
 
 import 'ui/event_list/events_list.dart';
 import 'ui/home/carousel_with_indicator.dart';
@@ -40,10 +40,13 @@ class _MyAppState extends State<MyApp> {
       title: appTitle,
       theme: ThemeData.dark().copyWith(
           primaryColor: Constants.COLORMAIN,
-          appBarTheme: AppBarTheme(iconTheme: IconThemeData(color: Constants.COLORMAIN))),
+          appBarTheme: AppBarTheme(
+              iconTheme: IconThemeData(color: Constants.COLORMAIN))),
       home: showSplash
           ? splashScreen()
-          : iUserid == -1 || iUserid == null ? new SignInOrSignUp() : MyHomePage(title: "Insomnia"),
+          : iUserid == -1 || iUserid == null
+              ? new SignInOrSignUp()
+              : MyHomePage(title: "Insomnia"),
     );
   }
 
@@ -52,8 +55,10 @@ class _MyAppState extends State<MyApp> {
       height: double.infinity,
       width: double.infinity,
       decoration: BoxDecoration(
-          image:
-              DecorationImage(image: AssetImage('images/splash_screen.jpg'), fit: BoxFit.fitWidth)),
+          image: DecorationImage(
+              image: AssetImage('images/splash_screen.jpg'),
+              fit: BoxFit.fitWidth,
+              alignment: Alignment.topCenter)),
     );
   }
 

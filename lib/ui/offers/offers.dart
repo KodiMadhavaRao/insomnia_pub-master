@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:insomnia_pub/dtos/offer_list_dto.dart';
-import 'package:insomnia_pub/net/http_nw.dart';
-import 'package:insomnia_pub/util/constants.dart';
-import 'package:insomnia_pub/util/progress_indicator.dart';
-import 'package:insomnia_pub/util/custom_dialog.dart' as customDialog;
+import 'package:Amnesia/dtos/offer_list_dto.dart';
+import 'package:Amnesia/net/http_nw.dart';
+import 'package:Amnesia/util/constants.dart';
+import 'package:Amnesia/util/progress_indicator.dart';
+import 'package:Amnesia/util/custom_dialog.dart' as customDialog;
+
 class OffersWidgets extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {

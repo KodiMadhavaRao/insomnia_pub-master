@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:insomnia_pub/dtos/package_list_dto.dart';
-import 'package:insomnia_pub/net/http_nw.dart';
-import 'package:insomnia_pub/ui/table_booking/table_booking.dart';
-import 'package:insomnia_pub/util/constants.dart';
-import 'package:insomnia_pub/util/progress_indicator.dart';
-import 'package:insomnia_pub/util/custom_dialog.dart' as customDialog;
+import 'package:Amnesia/dtos/package_list_dto.dart';
+import 'package:Amnesia/net/http_nw.dart';
+import 'package:Amnesia/ui/table_booking/table_booking.dart';
+import 'package:Amnesia/util/constants.dart';
+import 'package:Amnesia/util/progress_indicator.dart';
+import 'package:Amnesia/util/custom_dialog.dart' as customDialog;
 
 class Packages extends StatefulWidget {
   @override
@@ -33,11 +33,11 @@ class PackagesState extends State<Packages> {
     AppHttpRequest.getPackagesResponse().then((response) {
       setState(() {
         loadingStatus = false;
-          try {
-            packageListDTO = PackageListDTO.fromJson(response);
-          } catch (e) {
-            print("EXCEPTION : " + e);
-          }
+        try {
+          packageListDTO = PackageListDTO.fromJson(response);
+        } catch (e) {
+          print("EXCEPTION : " + e);
+        }
       });
     });
   }
