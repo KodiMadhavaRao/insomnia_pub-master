@@ -1,3 +1,4 @@
+import 'package:Amnesia/ui/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:Amnesia/net/http_nw.dart';
 import 'package:Amnesia/util/Utils.dart';
@@ -161,16 +162,26 @@ class FeedBackWidgetState extends State<FeedBackWidget> {
     AppHttpRequest.submitFeedBack(iuserid, foodRatting, serviceRatting,
             settingRatting, overAllRatting, reviewText.text)
         .then((response) {
+      if (response is Map) {
+        if (response['status'] == 'success') {
+          /* setState(() {
+            loadingStatus = false;
+            reviewText.text = "";
+            foodRatting = 0;
+            serviceRatting = 0;
+            settingRatting = 0;
+            overAllRatting = 0;
+          });*/
+          Navigator.pushReplacement(context,
+              new MaterialPageRoute(builder: (context) => new MyHomePage()));
+          Utils.showToast("Thank's for valuble feedback");
+        }
+      } else {
+        Utils.showToast("Oops, error occured", Colors.redAccent, Colors.white);
+      }
       setState(() {
-//        if(response is Map)
         loadingStatus = false;
-        reviewText.text = "";
-        foodRatting = 0;
-        serviceRatting = 0;
-        settingRatting = 0;
-        overAllRatting = 0;
       });
-      Utils.showToast("Thank's for valuble feedback");
     });
 
     setState(() {
