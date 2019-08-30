@@ -60,7 +60,7 @@ final List child = map<Widget>(
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                "INSOMINIA-THE MOST HOT & HAPPENING \n PLACE IN HYDERABAD",
+                "AMNESIA-THE MOST HOT & HAPPENING \n PLACE IN HYDERABAD",
                 style: TextStyle(
                     backgroundColor: Colors.black45,
                     color: Colors.white,
