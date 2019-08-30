@@ -108,7 +108,10 @@ class PackagesState extends State<Packages> {
     showDialog(
       context: context,
       builder: (_) => customDialog.Dialog(
-        child: TableBooking(true),
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.53,
+          child: TableBooking(true),
+        ),
       ),
     );
   }
