@@ -29,6 +29,7 @@ class TableBookingState extends State<TableBooking> {
   TextEditingController numberController = new TextEditingController();
   int dropDownValue;
   int maleCount = 0, femaleCount = 0;
+  int maleValue , femaleValue ;
   int iTotalCount = 0;
   DateTime currentDate;
   TimeOfDay currentTime;
@@ -157,13 +158,84 @@ class TableBookingState extends State<TableBooking> {
                       padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
                       child: Text("SELECT GUEST/S")),
                   Container(
+                    height: 35,
                     color: Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.all(6.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          NumberCount(
+                          Flexible(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Male",
+                                  style: TextStyle(color: Colors.black),
+                                ),
+/*                                DropdownButtonHideUnderline(
+                                  child: Theme(
+                                    data: ThemeData.light(),
+                                    child: DropdownButton(
+                                      value: dropDownValue,
+                                      isExpanded: true,
+                                      items: getItem(),
+                                      onChanged: onDropDownChange,
+                                      style: TextStyle(color: Colors.black),
+                                      ),
+                                    ),
+                                  ),*/
+                                DropdownButtonHideUnderline(
+                                  child: Theme(
+                                    data: ThemeData.light(),
+                                    child: new DropdownButton<int>(
+                                      value: maleValue,
+                                      items: <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((int value) {
+                                        return new DropdownMenuItem<int>(
+                                          value: value,
+                                          child: new Text(value.toString()),
+                                        );
+                                      }).toList(),
+                                      onChanged: (int value) {
+                                        maleValue=value;
+                                        onMaleChange(value);
+                                      },
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            flex: 1,
+                          ),
+                          Flexible(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text("Female", style: TextStyle(color: Colors.black)),
+                                DropdownButtonHideUnderline(
+                                  child: Theme(
+                                    data: ThemeData.light(),
+                                    child: new DropdownButton<int>(
+                                      hint: Container(),
+                                      value: femaleValue,
+                                      items: <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((int value) {
+                                        return new DropdownMenuItem<int>(
+                                          value: value,
+                                          child: new Text(value.toString()),
+                                        );
+                                      }).toList(),
+                                      onChanged: (int value) {
+                                        femaleValue=value;
+                                        onFemaleChange(value);
+                                      },
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            flex: 1,
+                          )
+                          /*NumberCount(
                             initialCount: 0,
                             label: "Male",
                             onCountValueChange: onMaleChange,
@@ -172,7 +244,7 @@ class TableBookingState extends State<TableBooking> {
                             initialCount: 0,
                             label: "Female",
                             onCountValueChange: onFemaleChange,
-                          )
+                          )*/
                         ],
                       ),
                     ),

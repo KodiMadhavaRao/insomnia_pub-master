@@ -33,11 +33,11 @@ class HomeScreenState extends State<MyHomePage> {
   Future<void> _initializeVideoPlayerFuture;
 
   final List<String> assetList = [
-    "images/event_banner.jpg",
-    "images/event_banner.jpg",
+    "images/2x@events_banner.jpg",
+    "images/2x@events_banner.jpg",
     "images/offer_banner.jpg",
     "images/reservationtable_banner_booking.jpg",
-    "images/gallery_banner.jpg",
+    "images/2x@gallery_banner.jpg",
     "images/reservationtable_banner.jpg",
     "images/about_banner.png",
   ];
