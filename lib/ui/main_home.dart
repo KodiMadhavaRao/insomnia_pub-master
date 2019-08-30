@@ -72,6 +72,8 @@ class MainHomeState extends State<MainHome> {
         height: 50,
         width: double.infinity,
         fit: BoxFit.cover,
+        color: Colors.grey.withAlpha(100),
+        colorBlendMode: BlendMode.difference,
       ),
     );
   }
