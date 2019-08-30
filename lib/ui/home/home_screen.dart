@@ -78,10 +78,10 @@ class HomeScreenState extends State<MyHomePage> {
                     children: <Widget>[
                       Container(
                         child: Image.asset(
-                          "images/insomnialogo.png",
+                          "images/ic_launcher.png",
                         ),
-                        width: 80,
-                        height: 80,
+                        width: 85,
+                        height: 85,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -369,6 +369,7 @@ class HomeScreenState extends State<MyHomePage> {
 //                    eventL1istDTO.message[index].image,
 //                              'https://source.unsplash.com/210x210/?pub&party',
                               fit: BoxFit.cover,
+                              alignment: Alignment.bottomCenter,
                             ),
                           ),
                 getTitle(id),

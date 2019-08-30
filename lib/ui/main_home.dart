@@ -68,10 +68,10 @@ class MainHomeState extends State<MainHome> {
         launchMap();
       },
       child: Image.asset(
-        "images/map.jpg",
-        height: 40,
+        "images/map.png",
+        height: 50,
         width: double.infinity,
-        fit: BoxFit.fill,
+        fit: BoxFit.cover,
       ),
     );
   }
