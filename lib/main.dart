@@ -17,7 +17,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final appTitle = 'Insomnia';
+  final appTitle = 'Amnesia';
 
   final String backImg = "images/bg_1x.png";
   bool showSplash;
